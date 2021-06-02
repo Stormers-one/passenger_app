@@ -1,4 +1,4 @@
-package com.example.passenger_app
+package com.stormers.passenger_app
 
 import io.flutter.embedding.android.FlutterActivity
 
