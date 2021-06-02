@@ -159,7 +159,7 @@ class _BookingState extends State<Booking> {
                                 cursorWidth: 0,
                                 autofocus: false,
                                 validator: (val) =>
-                                    val.isEmpty && clickStatBooking
+                                    val!.isEmpty && clickStatBooking
                                         ? 'This is required'
                                         : null,
                               ),
@@ -181,7 +181,7 @@ class _BookingState extends State<Booking> {
                                 keyboardType: TextInputType.text,
                                 cursorWidth: 0,
                                 validator: (val) {
-                                  if (val.isEmpty && clickStatBooking) {
+                                  if (val!.isEmpty && clickStatBooking) {
                                     return 'This is requied';
                                   } else if (_controller.text ==
                                           _controller1.text &&

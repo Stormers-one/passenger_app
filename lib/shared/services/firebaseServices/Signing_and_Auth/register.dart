@@ -117,7 +117,7 @@ class _RegisterState extends State<RegisterPage> {
                                             setState(() => fname = val);
                                           },
                                           validator: (val) =>
-                                              val.isEmpty && clickStatRegister
+                                              val!.isEmpty && clickStatRegister
                                                   ? 'Enter Full Name'
                                                   : null,
                                         ),
@@ -138,7 +138,7 @@ class _RegisterState extends State<RegisterPage> {
                                             setState(() => email = val);
                                           },
                                           validator: (val) =>
-                                              val.isEmpty && clickStatRegister
+                                              val!.isEmpty && clickStatRegister
                                                   ? 'Enter a valid Email'
                                                   : null,
                                         ),
@@ -157,7 +157,7 @@ class _RegisterState extends State<RegisterPage> {
                                           onChanged: (val) {
                                             setState(() => password = val);
                                           },
-                                          validator: (val) => val.length < 8 &&
+                                          validator: (val) => val!.length < 8 &&
                                                   clickStatRegister
                                               ? 'Password should consist of\natleast 8 Characters'
                                               : null,
@@ -197,7 +197,7 @@ class _RegisterState extends State<RegisterPage> {
                                           onChanged: (val) {
                                             setState(() => phno = val);
                                           },
-                                          validator: (val) => val.length !=
+                                          validator: (val) => val!.length !=
                                                       10 &&
                                                   clickStatRegister
                                               ? 'Enter a valid 10 Digit phone number'

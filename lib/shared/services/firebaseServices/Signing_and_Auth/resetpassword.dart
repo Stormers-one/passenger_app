@@ -116,7 +116,7 @@ class _ResetState extends State<ResetPage> {
                                             setState(() => email = val);
                                           },
                                           validator: (val) =>
-                                              val.isEmpty && clickStatLogin
+                                              val!.isEmpty && clickStatLogin
                                                   ? 'Enter an Email'
                                                   : null,
                                         ),

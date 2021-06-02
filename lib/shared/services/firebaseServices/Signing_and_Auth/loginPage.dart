@@ -159,7 +159,7 @@ class _LoginState extends State<LoginPage> {
                                                 setState(() => email = val);
                                               },
                                               validator: (val) =>
-                                                  val.isEmpty && clickStatLogin
+                                                  val!.isEmpty && clickStatLogin
                                                       ? 'Enter an Email'
                                                       : null,
                                             ),
@@ -178,7 +178,7 @@ class _LoginState extends State<LoginPage> {
                                                 setState(() => password = val);
                                               },
                                               validator: (val) =>
-                                                  val.isEmpty && clickStatLogin
+                                                  val!.isEmpty && clickStatLogin
                                                       ? 'Enter password'
                                                       : null,
                                             ),

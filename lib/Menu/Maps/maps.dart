@@ -95,9 +95,10 @@ class _Maps extends State<Maps> {
                                 decoration: textInputDecoration("From"),
                                 keyboardType: TextInputType.emailAddress,
                                 cursorWidth: 0,
-                                validator: (val) => val.isEmpty && clickStatMaps
-                                    ? 'This is required'
-                                    : null,
+                                validator: (val) =>
+                                    val!.isEmpty && clickStatMaps
+                                        ? 'This is required'
+                                        : null,
                               ),
                               SizedBox(
                                 height: 10,
@@ -118,7 +119,7 @@ class _Maps extends State<Maps> {
                                   keyboardType: TextInputType.text,
                                   cursorWidth: 0,
                                   validator: (val) {
-                                    if (val.isEmpty && clickStatMaps) {
+                                    if (val!.isEmpty && clickStatMaps) {
                                       return 'This is requied';
                                     } else if (_controller.text ==
                                             _controller1.text &&

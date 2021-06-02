@@ -149,9 +149,10 @@ class _Timing extends State<Timing> {
                               keyboardType: TextInputType.emailAddress,
                               cursorWidth: 0,
                               autofocus: false,
-                              validator: (val) => val.isEmpty && clickStatTiming
-                                  ? 'This is required'
-                                  : null,
+                              validator: (val) =>
+                                  val!.isEmpty && clickStatTiming
+                                      ? 'This is required'
+                                      : null,
                             ),
                             SizedBox(
                               height: 10,
@@ -172,7 +173,7 @@ class _Timing extends State<Timing> {
                                 keyboardType: TextInputType.text,
                                 cursorWidth: 0,
                                 validator: (val) {
-                                  if (val.isEmpty && clickStatTiming) {
+                                  if (val!.isEmpty && clickStatTiming) {
                                     return 'This is required';
                                   } else if (_controller.text ==
                                           _controller1.text &&

@@ -81,7 +81,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (val) => val.isEmpty ? 'Enter Full Name' : null,
+                    validator: (val) => val!.isEmpty ? 'Enter Full Name' : null,
                     onChanged: (val) => setState(() => currentName = val),
                   ),
                   new Padding(
@@ -89,7 +89,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   new TextFormField(
                       initialValue: userData.phno,
-                      validator: (val) => val.length != 10.0
+                      validator: (val) => val!.length != 10.0
                           ? 'Enter valid 10 Digit Phone Nmber'
                           : null,
                       style: new TextStyle(color: Colors.grey),
