@@ -69,6 +69,7 @@ class _BookingConfirm extends State<BookingConfirm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    print(user.uid!);
     return loading
         ? Loading()
         : MaterialApp(

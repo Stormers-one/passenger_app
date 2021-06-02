@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
-import 'package:passenger_app/shared/drawer.dart';
 import 'package:passenger_app/shared/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
@@ -23,7 +22,7 @@ class BookingList extends StatelessWidget {
             title: Text('My Bookings'),
             backgroundColor: appBarColor,
           ),
-          drawer: DrawerBuild(),
+          // drawer: DrawerBuild(),
           body: BookLister(),
         ),
       ),
@@ -40,6 +39,7 @@ class _BookListerState extends State<BookLister> {
   @override
   Widget build(BuildContext context) {
     final book = Provider.of<List<TicketData>>(context);
+    print(book);
     book.forEach((f) {
       print(f.bookid);
     });

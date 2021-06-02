@@ -5,7 +5,6 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/model/busStatic.dart';
 import 'googlemapservice.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
 class MapState with ChangeNotifier {
   static LatLng _initialPosition = LatLng(0.0, 0.0);
@@ -188,7 +187,7 @@ class MapState with ChangeNotifier {
 //  LOADING INITIAL POSITION
   void _loadingInitialPosition() async {
     await Future.delayed(Duration(seconds: 5)).then((v) {
-      if (_initialPosition == null) {
+      if (_initialPosition == LatLng(0.0, 0.0)) {
         locationServiceActive = false;
         notifyListeners();
       }

@@ -68,8 +68,9 @@ class _MapView extends State<MapView> {
   }
 
   void _updateCameraPosition(CameraPosition position) {
+    print(_position);
     setState(() {
-      _position = position;
+      this._position = position;
     });
   }
 

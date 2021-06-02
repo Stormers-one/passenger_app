@@ -99,7 +99,7 @@ class DatabaseService {
       return TicketData(
         bookid: doc['Booking ID'],
         booktime: doc['Booking Time'].toString(),
-        bookfare: doc['fare'].toString(),
+        bookfare: doc['Fare'].toString(),
         bookfrom: doc['From'],
         bookto: doc['To'],
         bookphno: doc['Phone Number'],

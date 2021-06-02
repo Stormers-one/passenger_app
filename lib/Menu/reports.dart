@@ -5,7 +5,6 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'help.dart';
-import 'package:passenger_app/shared/Styling/colors.dart';
 
 var loading = false;
 

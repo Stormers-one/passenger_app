@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/Signing_and_Auth/resetpassword.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_signin_button/flutter_signin_button.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/services/firebaseServices/Signing_and_Auth/register.dart';
@@ -11,8 +8,6 @@ import 'package:passenger_app/shared/services/firebaseServices/Signing_and_Auth/
 import 'package:passenger_app/shared/constants.dart';
 import 'package:passenger_app/shared/loading.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
   // final Function toggleView;

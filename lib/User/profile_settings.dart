@@ -9,7 +9,6 @@ import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:passenger_app/shared/model/user.dart';
-import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 
 class SettingsForm extends StatefulWidget {

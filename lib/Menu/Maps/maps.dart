@@ -10,7 +10,6 @@ import 'mapview.dart';
 import 'package:provider/provider.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import '../../Shared/services/mapServices/mapState.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
 class Maps extends StatefulWidget {
   @override

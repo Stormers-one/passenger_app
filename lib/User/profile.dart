@@ -27,7 +27,7 @@ class _ProfileState extends State<Profile> {
       );
     }
 
-    final user = Provider.of<User>(context);
+    final userID = Provider.of<User>(context);
     return /*profrefresher? Loading():*/ MaterialApp(
       title: 'Profile',
       home: Scaffold(
@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       StreamBuilder<UserData>(
-                        stream: DatabaseService(uid: user.uid!).userData,
+                        stream: DatabaseService(uid: userID.uid!).userData,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             UserData userData = snapshot.data!;

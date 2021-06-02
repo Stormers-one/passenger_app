@@ -4,8 +4,9 @@ import 'package:passenger_app/Menu/Booking/bookings_list.dart';
 import 'package:passenger_app/Menu/help.dart';
 import 'package:passenger_app/User/profile.dart';
 import 'package:passenger_app/shared/loading.dart';
+import 'package:passenger_app/shared/model/user.dart';
+import 'package:provider/provider.dart';
 import 'constants.dart';
-import 'package:passenger_app/homepage.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 
 class DrawerBuild extends StatefulWidget {
@@ -15,6 +16,8 @@ class DrawerBuild extends StatefulWidget {
 class _DrawerBuild extends State<DrawerBuild> {
   @override
   Widget build(BuildContext context) {
+    final userID = Provider.of<User>(context);
+    print(userID.uid);
     return new Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -32,19 +35,19 @@ class _DrawerBuild extends State<DrawerBuild> {
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home',
-                style: TextStyle(
-                  fontFamily: 'Quicksand-Bold',
-                )),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Homepage()),
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.home),
+          //   title: Text('Home',
+          //       style: TextStyle(
+          //         fontFamily: 'Quicksand-Bold',
+          //       )),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => Homepage()),
+          //     );
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.account_circle),
             title: Text('Profile',

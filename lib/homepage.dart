@@ -4,6 +4,8 @@ import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:passenger_app/shared/drawer.dart';
+import 'package:passenger_app/shared/model/user.dart';
+import 'package:provider/provider.dart';
 import 'shared/Styling/homepageButtons/button.dart';
 import 'shared/Styling/homepageButtons/data.dart';
 
@@ -19,6 +21,8 @@ class _HomepageState extends State<Homepage> {
   final buttonHome = Buttons.fetchAll();
   @override
   Widget build(BuildContext context) {
+    final userID = Provider.of<User>(context);
+    print(userID.uid);
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Quicksand-Medium'),
       debugShowCheckedModeBanner: false,
@@ -45,7 +49,7 @@ class _HomepageState extends State<Homepage> {
                 clickStatLogin = false;
                 clickStatRegister = false;
                 await _auth.signOut();
-                Navigator.push(
+                Navigator.pop(
                   context,
                   MaterialPageRoute(builder: (context) => Wrapper()),
                 );

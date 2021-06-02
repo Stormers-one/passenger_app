@@ -15,7 +15,7 @@ class FireStorageState with ChangeNotifier {
 
   Future<void> _getImageFromFireStorage() async {
     try {
-      if (await FirebaseStorage.instance
+      if (FirebaseStorage.instance
           .ref('profile_image/$userID')
           .fullPath
           .isNotEmpty) {

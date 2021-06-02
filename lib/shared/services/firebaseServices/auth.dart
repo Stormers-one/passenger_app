@@ -23,6 +23,14 @@ class Authservice {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
+  Stream<firebase_auth.User?> get onAuthStateChanged =>
+      _auth.authStateChanges();
+
+  // GET UID
+  Future<String> getCurrentUID() async {
+    return _auth.currentUser!.uid;
+  }
+
   //sign in annonymously
 
   Future signInAnon() async {

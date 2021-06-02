@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:passenger_app/Menu/Booking/confirmation.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/busSearch.dart';
+import 'package:passenger_app/shared/services/firebaseServices/auth.dart';
 import '../../shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:passenger_app/shared/drawer.dart';
@@ -104,7 +105,7 @@ class _BookingState extends State<Booking> {
     dist = dist.substring(0, dist.length - 3);
     print(_distance);
     print(dist);
-    distDouble = double.parse(dist);
+    this.distDouble = double.parse(dist);
     distancing(distDouble!);
   }
 
@@ -112,6 +113,8 @@ class _BookingState extends State<Booking> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Authservice().getCurrentUID;
+    print("[Drawer] User is: " + user.toString());
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Quicksand-Medium'),
       title: 'Booking',
@@ -246,7 +249,7 @@ class _BookingState extends State<Booking> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  BookingConfirm(fare: fare)));
+                                                  BookingConfirm(fare: fare!)));
                                     }
                                   },
                                   child: const Text('Proceed',
