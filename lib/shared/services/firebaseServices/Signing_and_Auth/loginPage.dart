@@ -36,24 +36,31 @@ class _LoginState extends State<LoginPage> {
     super.initState();
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: Text("Exit Diaglog"),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        content: Text("Do You Really want to Exit?"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 5),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ).then((value) => value ?? false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future<bool> _onBackPressed() {
-      return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text("Do You Really want to Exit?"),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: Text("NO")),
-                  TextButton(
-                      onPressed: () => Navigator.pop(context, exit(0)),
-                      child: Text("YES")),
-                ],
-              ));
-    }
-
     return loading
         ? Loading()
         : WillPopScope(
