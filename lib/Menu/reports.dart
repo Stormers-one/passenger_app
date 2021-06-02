@@ -5,11 +5,7 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'help.dart';
-
-Color factColor = Colors.orange[200];
-Color factBoxColor = bgOrange;
-Color helpBoxColor = bgOrange;
-Color helpColor = Colors.orange[200];
+import 'package:passenger_app/shared/Styling/colors.dart';
 
 var loading = false;
 
@@ -69,8 +65,8 @@ class Reports extends StatelessWidget {
                               .toList(),
                           isExpanded: true,
                           onChanged: (val) => (() {
-                            _reportType = val;
-                            selectedReport = val;
+                            _reportType = val.toString();
+                            selectedReport = val.toString();
                             FocusScope.of(context).requestFocus(FocusNode());
                           }),
                           decoration: textInputDecorationNoHint(),

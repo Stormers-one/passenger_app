@@ -8,18 +8,13 @@ import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/shared/services/firebaseServices/database.dart';
 import 'package:provider/provider.dart';
 
-Color factColor = Colors.orange[100];
-Color factBoxColor = Colors.transparent;
-Color helpBoxColor = Colors.transparent;
-Color helpColor = Colors.orange[100];
-
 class Help extends StatefulWidget {
   @override
   _Help createState() => _Help();
 }
 
 class _Help extends State<Help> {
-  TextEditingController feedbackText;
+  TextEditingController? feedbackText;
 
   List<String> devs = [
     'Anandu R',
@@ -43,7 +38,7 @@ class _Help extends State<Help> {
     super.initState();
   }
 
-  double distDouble;
+  double? distDouble;
   @override
   void dispose() {
     feedbackText?.dispose();
@@ -148,8 +143,8 @@ class _Help extends State<Help> {
                                   isExpanded: true,
                                   onChanged: (val) {
                                     print(val);
-                                    _feedbackType = val;
-                                    selectedType = val;
+                                    _feedbackType = val.toString();
+                                    selectedType = val.toString();
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                   },
@@ -167,16 +162,16 @@ class _Help extends State<Help> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (selectedType == "Application") {
-                                  DatabaseService(uid: userID.uid)
-                                      .appFeedbackSubmit(userID.uid,
-                                          feedbackText.text, "", "");
+                                  DatabaseService(uid: userID.uid!)
+                                      .appFeedbackSubmit(userID.uid!,
+                                          feedbackText!.text, "", "");
                                 } else if (selectedType == "Route") {
                                   print("Database connection not established");
                                   Fluttertoast.showToast(
                                       msg:
                                           ("Database connection not established!"));
                                 }
-                                feedbackText.clear();
+                                feedbackText!.clear();
                                 Fluttertoast.showToast(msg: "Report Sent!");
                               },
                               child: const Text('Proceed',

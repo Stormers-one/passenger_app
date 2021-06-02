@@ -18,3 +18,8 @@ Color crowdHigh = const Color(0xFFFF474E);
 Color crowdMed = const Color(0xFFFAD461);
 Color crowdLow = const Color(0xFF00E061);
 Color crowdFull = const Color(0xFF323031);
+
+Color factColor = Colors.orange.shade200;
+Color factBoxColor = bgOrange;
+Color helpBoxColor = bgOrange;
+Color helpColor = Colors.orange.shade200;
