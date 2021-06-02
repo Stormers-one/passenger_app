@@ -4,8 +4,8 @@ import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:passenger_app/shared/drawer.dart';
-import 'homepageButtons/data.dart';
-import 'homepageButtons/button.dart';
+import 'shared/Styling/homepageButtons/button.dart';
+import 'shared/Styling/homepageButtons/data.dart';
 
 class Homepage extends StatefulWidget {
   // Homepage({Key key}) : super(key: key);
@@ -16,7 +16,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final Authservice _auth = new Authservice();
-  final buttonHome = Buttons.fetchAll() ?? [];
+  final buttonHome = Buttons.fetchAll();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
