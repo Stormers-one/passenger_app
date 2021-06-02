@@ -95,10 +95,10 @@ class _BookingConfirm extends State<BookingConfirm> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           StreamBuilder<UserData>(
-                              stream: DatabaseService(uid: user.uid).userData,
+                              stream: DatabaseService(uid: user.uid!).userData,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  UserData userData = snapshot.data;
+                                  UserData userData = snapshot.data!;
                                   return Form(
                                     child: Container(
                                       padding: EdgeInsets.all(20.0),
