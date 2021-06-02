@@ -66,38 +66,6 @@ class DatabaseService {
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  //////////////////          Bus Stops Collection          ////////////////////
-  //////////////////////////////////////////////////////////////////////////////
-
-  final CollectionReference busStopCollection =
-      FirebaseFirestore.instance.collection('Bus Stops');
-  Future updateBusStopData(String stopName, List<String> caseSearch) async {
-    return await busStopCollection.doc().set({
-      'Stop Name': stopName,
-      'Case Search': caseSearch,
-    });
-  }
-
-  List<BusStopData> _busStopListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return BusStopData(
-        stopName: doc['Stop Name'],
-      );
-    }).toList();
-  }
-
-  Stream<List<BusStopData>> get busStopData {
-    return busStopCollection.snapshots().map(_busStopListFromSnapshot);
-  }
-
-  getBusStopList(String query) {
-    return FirebaseFirestore.instance
-        .collection("Bus Stops")
-        .where("Case Search", arrayContains: query)
-        .get();
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
   ///////////////////          Booking Collection          /////////////////////
   //////////////////////////////////////////////////////////////////////////////
   final CollectionReference ticketsCollection =
@@ -190,5 +158,41 @@ class MapDatabaseService {
   //get user stream
   Stream<List<BusStatic>> get busStaticData {
     return busStaticCollecation.snapshots().map(_busStaticDataFromSnapshot);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////          Bus Stops Collection          ////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+class BusListService {
+  getBusStopList(String query) {
+    return FirebaseFirestore.instance
+        .collection("Bus Stops")
+        .where("Case Search", arrayContains: query)
+        .get();
+  }
+
+  List<BusStopData> _busStopListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return BusStopData(
+        stopName: doc['Stop Name'],
+      );
+    }).toList();
+  }
+
+  Stream<List<BusStopData>> get busStopData {
+    return busStopCollection.snapshots().map(_busStopListFromSnapshot);
+  }
+
+  final CollectionReference busStopCollection =
+      FirebaseFirestore.instance.collection('Bus Stops');
+  Future updateBusStopData(String stopName, List<String> caseSearch) async {
+    return await busStopCollection.doc().set(
+      {
+        'Stop Name': stopName,
+        'Case Search': caseSearch,
+      },
+    );
   }
 }

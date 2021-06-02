@@ -21,9 +21,9 @@ class _Timing extends State<Timing> {
   var queryResult = [];
   var busStopName = [];
   int count = 0;
-  DatabaseService res = DatabaseService();
-  TextEditingController _controller;
-  TextEditingController _controller1;
+  BusListService? res = BusListService();
+  TextEditingController? _controller;
+  TextEditingController? _controller1;
   final _formkey = GlobalKey<FormState>();
   bool clickStatTiming = false;
 
@@ -59,7 +59,7 @@ class _Timing extends State<Timing> {
       });
     }
     //if(queryResult.length == 0 && value.length == 1 ) {
-    res.getBusStopList(value).then((QuerySnapshot docs) {
+    res!.getBusStopList(value).then((QuerySnapshot docs) {
       for (var i = 0; i < docs.docs.length; i++) {
         queryResult.add(docs.docs[i].data);
       }
@@ -101,7 +101,7 @@ class _Timing extends State<Timing> {
     // });
     return StreamProvider<List<BusStopData>>.value(
       initialData: [],
-      value: DatabaseService().busStopData,
+      value: BusListService().busStopData,
       child: MaterialApp(
         title: 'Bus Timing',
         theme: ThemeData(fontFamily: 'Quicksand-Medium'),
@@ -143,7 +143,7 @@ class _Timing extends State<Timing> {
                                     .requestFocus(FocusNode());
                                 showSearch(
                                     context: context,
-                                    delegate: BusSearch("From", _controller));
+                                    delegate: BusSearch("From", _controller!));
                               },
                               decoration: textInputDecoration("From"),
                               keyboardType: TextInputType.emailAddress,
@@ -165,7 +165,7 @@ class _Timing extends State<Timing> {
                                       .requestFocus(FocusNode());
                                   showSearch(
                                       context: context,
-                                      delegate: BusSearch("To", _controller1));
+                                      delegate: BusSearch("To", _controller1!));
                                 },
                                 textCapitalization:
                                     TextCapitalization.characters,
@@ -175,9 +175,9 @@ class _Timing extends State<Timing> {
                                 validator: (val) {
                                   if (val!.isEmpty && clickStatTiming) {
                                     return 'This is required';
-                                  } else if (_controller.text ==
-                                          _controller1.text &&
-                                      _controller.text.isNotEmpty) {
+                                  } else if (_controller!.text ==
+                                          _controller1!.text &&
+                                      _controller!.text.isNotEmpty) {
                                     return 'Both location should not be same';
                                   } else {
                                     return null;
@@ -203,7 +203,7 @@ class _Timing extends State<Timing> {
                               isExpanded: true,
                               onChanged: (val) {
                                 setState(() {
-                                  _currentBusType = val;
+                                  _currentBusType = val.toString();
                                   // bkey = setBusKey(_currentBusType.toString());
                                   // print(bkey);
                                 });
@@ -230,7 +230,7 @@ class _Timing extends State<Timing> {
                                   .toList(),
                               isExpanded: true,
                               onChanged: (val) => setState(() {
-                                _currenttime = val;
+                                _currenttime = val.toString();
                                 setTime(_currenttime);
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
@@ -250,9 +250,9 @@ class _Timing extends State<Timing> {
                                     if (_currentBusType.isEmpty || bkey == 0) {
                                       inUrl =
                                           'https://www.aanavandi.com//search/results/source/' +
-                                              _controller.text +
+                                              _controller!.text +
                                               '/destination/' +
-                                              _controller1.text +
+                                              _controller1!.text +
                                               '/timing/$time1';
                                     }
                                     // else{

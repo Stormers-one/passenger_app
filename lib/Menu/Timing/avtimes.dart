@@ -15,7 +15,7 @@ class _AanavandiState extends State<Aanavandi> {
       Completer<WebViewController>();
   String from = selectedTimingFrom.replaceAll(' ', '-').toLowerCase();
   String to = selectedTimingTo.replaceAll(' ', '-').toLowerCase();
-  String time;
+  String? time;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

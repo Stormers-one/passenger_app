@@ -15,13 +15,13 @@ class MapView extends StatefulWidget {
 }
 
 class _MapView extends State<MapView> {
-  GoogleMapController mapController;
-  LatLng _center;
-  Position currentLocation;
-  CameraPosition _position;
+  GoogleMapController? mapController;
+  LatLng? _center;
+  Position? currentLocation;
+  CameraPosition? _position;
   bool loading = true;
 
-  BitmapDescriptor pinLocationIcon;
+  BitmapDescriptor? pinLocationIcon;
 
   @override
   void initState() {
@@ -52,12 +52,12 @@ class _MapView extends State<MapView> {
     currentLocation = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     setState(() {
-      _center = LatLng(currentLocation.latitude, currentLocation.longitude);
+      _center = LatLng(currentLocation!.latitude, currentLocation!.longitude);
       _markers.clear();
       _markers.add(Marker(
           markerId: MarkerId('curr_loc'),
-          position: _center,
-          icon: pinLocationIcon));
+          position: _center!,
+          icon: pinLocationIcon!));
       loading = false;
     });
     print('center $_center');
@@ -95,7 +95,7 @@ class _MapView extends State<MapView> {
                       myLocationEnabled: true,
                       mapType: MapType.normal,
                       initialCameraPosition: CameraPosition(
-                        target: _center,
+                        target: _center!,
                         zoom: 11.0,
                       ),
                       compassEnabled: true,

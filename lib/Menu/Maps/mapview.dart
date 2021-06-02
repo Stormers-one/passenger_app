@@ -20,15 +20,15 @@ class MapView extends StatefulWidget {
 }
 
 class _MapView extends State<MapView> {
-  GoogleMapController mapController;
-  LatLng _center;
-  Position currentLocation;
+  GoogleMapController? mapController;
+  LatLng? _center;
+  Position? currentLocation;
   // CameraPosition _position;
 
   bool loading = true;
 
-  TextEditingController _controllerFrom;
-  TextEditingController _controllerTo;
+  TextEditingController? _controllerFrom;
+  TextEditingController? _controllerTo;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _MapView extends State<MapView> {
     currentLocation = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     setState(() {
-      _center = LatLng(currentLocation.latitude, currentLocation.longitude);
+      _center = LatLng(currentLocation!.latitude, currentLocation!.longitude);
 
       loading = false;
     });
@@ -78,7 +78,7 @@ class _MapView extends State<MapView> {
 
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Quicksand-Medium'),
-      home: appState.initialPosition == null
+      home: appState.initialPosition == LatLng(0.0, 0.0)
           ? Loading()
           : Scaffold(
               appBar: AppBar(
@@ -233,7 +233,7 @@ class _MapView extends State<MapView> {
                                         Expanded(
                                           child: Container(
                                             child: Text(
-                                              appState.distance ?? "",
+                                              appState.distance,
                                               overflow: TextOverflow.clip,
                                             ),
                                           ),
@@ -274,7 +274,7 @@ class _MapView extends State<MapView> {
                                         Expanded(
                                           child: Container(
                                             child: Text(
-                                              appState.duration ?? "",
+                                              appState.duration,
                                               overflow: TextOverflow.clip,
                                             ),
                                           ),
