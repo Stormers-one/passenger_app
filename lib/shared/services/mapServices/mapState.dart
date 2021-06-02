@@ -80,10 +80,10 @@ class MapState with ChangeNotifier {
     int i;
     for (i = 0; i < busData.length; i++) {
       _addBusMarker(
-          LatLng(double.parse(busData[i].latitude),
-              double.parse(busData[i].longitude)),
-          busData[i].busId,
-          busData[i].count);
+          LatLng(double.parse(busData[i].latitude!),
+              double.parse(busData[i].longitude!)),
+          busData[i].busId!,
+          busData[i].count!);
     }
     notifyListeners();
   }
