@@ -9,7 +9,7 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 
 class ResetPage extends StatefulWidget {
   final Function toggleView;
-  ResetPage({this.toggleView});
+  ResetPage({required this.toggleView});
 
   @override
   _ResetState createState() => _ResetState();
@@ -29,7 +29,7 @@ class _ResetState extends State<ResetPage> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.orange[300],
+            backgroundColor: bgColor,
             body: Stack(children: <Widget>[
               Background(),
               GestureDetector(
@@ -71,8 +71,8 @@ class _ResetState extends State<ResetPage> {
                                       ),
                                       gradient: new LinearGradient(
                                           colors: [
-                                            Colors.orange[600],
-                                            Colors.red[300]
+                                            Colors.orange.shade600,
+                                            Colors.red.shade300
                                           ],
                                           begin:
                                               const FractionalOffset(0.5, 0.0),
@@ -129,7 +129,7 @@ class _ResetState extends State<ResetPage> {
                                           width: 200,
                                           child: ElevatedButton(
                                             onPressed: () async {
-                                              if (_formkey.currentState
+                                              if (_formkey.currentState!
                                                   .validate()) {
                                                 setState(() => loading = true);
                                                 dynamic result = await _auth
