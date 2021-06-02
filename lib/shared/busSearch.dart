@@ -5,7 +5,7 @@ import 'package:passenger_app/shared/constants.dart';
 TicketDisplay qrd = new TicketDisplay();
 
 class BusSearch extends SearchDelegate<String> {
-  String fromto;
+  String? fromto;
   TextEditingController controller = new TextEditingController();
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -62,7 +62,7 @@ class BusSearch extends SearchDelegate<String> {
           }
           close(context, "null");
           controller.text = selectedString;
-          return controller;
+          // return controller;
         },
         leading: Icon(Icons.location_city),
         title: RichText(

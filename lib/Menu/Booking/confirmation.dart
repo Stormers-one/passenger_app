@@ -14,25 +14,25 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class BookingConfirm extends StatefulWidget {
   final fare;
-  BookingConfirm({Key key, this.fare}) : super(key: key);
+  BookingConfirm({required this.fare});
   _BookingConfirm createState() => _BookingConfirm(fare: fare);
 }
 
 class _BookingConfirm extends State<BookingConfirm> {
-  Razorpay _razorpay;
+  Razorpay? _razorpay;
   var fare;
-  _BookingConfirm({this.fare});
+  _BookingConfirm({required this.fare});
   bool loading = false;
   void initState() {
     super.initState();
     _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSucess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSucess);
+    _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
   }
 
   void dispose() {
     super.dispose();
-    _razorpay.clear();
+    _razorpay!.clear();
   }
 
   void openCheckout() async {
@@ -44,7 +44,7 @@ class _BookingConfirm extends State<BookingConfirm> {
       'prefill': {'contact': '', 'email': ''},
     };
     try {
-      _razorpay.open(options);
+      _razorpay!.open(options);
       loading = false;
     } catch (e) {
       print(e);
@@ -52,7 +52,7 @@ class _BookingConfirm extends State<BookingConfirm> {
   }
 
   void _handlePaymentSucess(PaymentSuccessResponse response) {
-    Fluttertoast.showToast(msg: "SUCCESS" + response.paymentId);
+    Fluttertoast.showToast(msg: "SUCCESS" + response.paymentId!);
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => TicketDisplay()));
   }
@@ -63,7 +63,7 @@ class _BookingConfirm extends State<BookingConfirm> {
             " " +
             response.code.toString() +
             " " +
-            response.message);
+            response.message!);
   }
 
   @override

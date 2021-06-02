@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
 import 'package:passenger_app/shared/drawer.dart';
+import 'package:passenger_app/shared/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 
 class BookingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userID = Provider.of<User>(context);
     return StreamProvider<List<TicketData>>.value(
       initialData: [],
-      value: DatabaseService().getUserBookings,
+      value: DatabaseService(uid: userID.uid!).getUserBookings,
       child: MaterialApp(
         title: 'My Bookings',
         theme: ThemeData(fontFamily: 'Quicksand-Medium'),
@@ -37,7 +39,7 @@ class BookLister extends StatefulWidget {
 class _BookListerState extends State<BookLister> {
   @override
   Widget build(BuildContext context) {
-    final book = Provider.of<List<TicketData>>(context) ?? [];
+    final book = Provider.of<List<TicketData>>(context);
     book.forEach((f) {
       print(f.bookid);
     });
@@ -52,7 +54,7 @@ class _BookListerState extends State<BookLister> {
 
 class BookingTile extends StatelessWidget {
   final TicketData book;
-  BookingTile({this.book});
+  BookingTile({required this.book});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -68,8 +70,8 @@ class BookingTile extends StatelessWidget {
             //    radius: 50.0,
             //    backgroundColor: red,
             //  ),
-            title: Text("Booking ID: " + book.bookid),
-            subtitle: Text("From: " + book.bookfrom + "\nTo: " + book.bookto),
+            title: Text("Booking ID: " + book.bookid!),
+            subtitle: Text("From: " + book.bookfrom! + "\nTo: " + book.bookto!),
           ),
         ));
   }

@@ -33,10 +33,10 @@ class TicketDisplay extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     StreamBuilder<UserData>(
-                        stream: DatabaseService(uid: user.uid).userData,
+                        stream: DatabaseService(uid: user.uid!).userData,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            UserData userData = snapshot.data;
+                            UserData userData = snapshot.data!;
                             username = userData.fname;
                             useremail = userData.email;
                             userphno = userData.phno;
@@ -45,11 +45,11 @@ class TicketDisplay extends StatelessWidget {
                             print(bidn);
                             if (booking) {
                               booking = false;
-                              DatabaseService(uid: userData.uid).addBooking(
-                                  userData.uid,
+                              DatabaseService(uid: userData.uid!).addBooking(
+                                  userData.uid!,
                                   fare,
-                                  bidn,
-                                  userData.phno,
+                                  bidn!,
+                                  userData.phno!,
                                   selectedBookingFrom,
                                   selectedBookingTo,
                                   selectedBookingBusType);

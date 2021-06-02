@@ -17,19 +17,19 @@ class Booking extends StatefulWidget {
 
 class _BookingState extends State<Booking> {
   String _currentBusType = "";
-  TextEditingController _controller;
-  TextEditingController _controller1;
-  TextEditingController _controller2;
+  TextEditingController? _controller;
+  TextEditingController? _controller1;
+  TextEditingController? _controller2;
   final _formkey = GlobalKey<FormState>();
   bool clickStatbooking = false;
 
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   GoogleMapsServices get googleMapsServices => _googleMapsServices;
-  static String _distance;
-  static String _duration;
-  List<String> mapData;
-  String get distance => _distance;
-  String get duration => _duration;
+  static String? _distance;
+  static String? _duration;
+  List<String>? mapData;
+  String get distance => _distance!;
+  String get duration => _duration!;
 
   // Future<Null> _selectDate(BuildContext context) async {
   //   final DateTime picked = await showDatePicker(
@@ -76,7 +76,7 @@ class _BookingState extends State<Booking> {
     super.initState();
   }
 
-  double distDouble;
+  double? distDouble;
   @override
   void dispose() {
     _controller?.dispose();
@@ -85,7 +85,7 @@ class _BookingState extends State<Booking> {
     super.dispose();
   }
 
-  Future<List<String>> travel(String fromLocation, String toLocation) async {
+  Future travel(String fromLocation, String toLocation) async {
     fromLocation = fromLocation + ', Kerala';
     toLocation = toLocation + ', Kerala';
     List<Location> placemark1 = await locationFromAddress(fromLocation);
@@ -99,13 +99,13 @@ class _BookingState extends State<Booking> {
     LatLng start = LatLng(latitude1, longitude1);
     LatLng destination = LatLng(latitude2, longitude2);
     mapData = await _googleMapsServices.getTravelInfo(start, destination);
-    _distance = mapData[0];
-    String dist = _distance;
+    _distance = mapData![0];
+    String dist = _distance!;
     dist = dist.substring(0, dist.length - 3);
     print(_distance);
     print(dist);
     distDouble = double.parse(dist);
-    distancing(distDouble);
+    distancing(distDouble!);
   }
 
   bool clickStatBooking = false;
@@ -152,7 +152,7 @@ class _BookingState extends State<Booking> {
                                   showSearch(
                                       context: context,
                                       delegate:
-                                          BusSearch("BFrom", _controller));
+                                          BusSearch("BFrom", _controller!));
                                 },
                                 decoration: textInputDecoration("From"),
                                 keyboardType: TextInputType.emailAddress,
@@ -174,7 +174,8 @@ class _BookingState extends State<Booking> {
                                       .requestFocus(FocusNode());
                                   showSearch(
                                       context: context,
-                                      delegate: BusSearch("BTo", _controller1));
+                                      delegate:
+                                          BusSearch("BTo", _controller1!));
                                 },
                                 decoration: textInputDecoration("To"),
                                 obscureText: false,
@@ -183,9 +184,9 @@ class _BookingState extends State<Booking> {
                                 validator: (val) {
                                   if (val!.isEmpty && clickStatBooking) {
                                     return 'This is requied';
-                                  } else if (_controller.text ==
-                                          _controller1.text &&
-                                      _controller.text.isNotEmpty) {
+                                  } else if (_controller!.text ==
+                                          _controller1!.text &&
+                                      _controller!.text.isNotEmpty) {
                                     return 'Both location should not be same';
                                   } else {
                                     return null;
@@ -211,8 +212,8 @@ class _BookingState extends State<Booking> {
                                     .toList(),
                                 isExpanded: true,
                                 onChanged: (val) => setState(() {
-                                  _currentBusType = val;
-                                  selectedBookingBusType = val;
+                                  _currentBusType = val.toString();
+                                  selectedBookingBusType = val.toString();
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                 }),
@@ -237,7 +238,8 @@ class _BookingState extends State<Booking> {
                                     await travel(
                                         selectedBookingFrom, selectedBookingTo);
                                     loading = false;
-                                    fare = getFare(_currentBusType, distDouble);
+                                    fare =
+                                        getFare(_currentBusType, distDouble!);
                                     clickStatBooking = true;
                                     if (_formkey.currentState!.validate()) {
                                       Navigator.push(
