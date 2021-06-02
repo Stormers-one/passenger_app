@@ -23,7 +23,7 @@ class UsersCount extends StatelessWidget {
     final userID = Provider.of<User>(context);
     return StreamProvider<List<Users>>.value(
       initialData: [],
-      value: DatabaseService(uid: userID.uid).users,
+      value: DatabaseService(uid: userID.uid!).users,
       child: MaterialApp(
         title: 'Homepage',
         home: Scaffold(

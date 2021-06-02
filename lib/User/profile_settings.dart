@@ -54,7 +54,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
     final user = Provider.of<User>(context);
     return StreamBuilder<UserData>(
-      stream: DatabaseService(uid: user.uid).userData,
+      stream: DatabaseService(uid: user.uid!).userData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           UserData userData = snapshot.data!;
@@ -150,10 +150,10 @@ class _SettingsFormState extends State<SettingsForm> {
                       style: raisedButtonStyle,
                       onPressed: () async {
                         if (_formkey.currentState!.validate()) {
-                          await DatabaseService(uid: user.uid).updateUserData(
-                              currentName ?? userData.fname,
-                              userData.email,
-                              currentphno ?? userData.phno);
+                          await DatabaseService(uid: user.uid!).updateUserData(
+                              currentName ?? userData.fname!,
+                              userData.email!,
+                              currentphno ?? userData.phno!);
                           Navigator.pop(context);
                         }
                       },
