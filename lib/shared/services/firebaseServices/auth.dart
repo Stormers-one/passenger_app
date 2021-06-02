@@ -10,11 +10,11 @@ class Authservice {
 
   //create user obj based on FirebaseUser
 
-  User _userFromFirebaseUser(firebase_auth.User user) {
-    if (user == null) {
-      return null;
-    }
-    return User(uid: user.uid);
+  User _userFromFirebaseUser(firebase_auth.User? user) {
+    // if (user == null) {
+    //   return null;
+    // }
+    return User(uid: user!.uid);
   }
 
   // auth change user stream
@@ -27,9 +27,9 @@ class Authservice {
 
   Future signInAnon() async {
     try {
-      firebase_auth.UserCredential result = await _auth.signInAnonymously();
-      firebase_auth.User user = result.user;
-      return _userFromFirebaseUser(user);
+      firebase_auth.UserCredential? result = await _auth.signInAnonymously();
+      firebase_auth.User? user = result.user;
+      return _userFromFirebaseUser(user!);
     } catch (e) {
       print(e.toString());
       return null;
@@ -40,10 +40,10 @@ class Authservice {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      firebase_auth.UserCredential result = await _auth
+      firebase_auth.UserCredential? result = await _auth
           .signInWithEmailAndPassword(email: email, password: password);
-      firebase_auth.User user = result.user;
-      return _userFromFirebaseUser(user);
+      firebase_auth.User? user = result.user;
+      return _userFromFirebaseUser(user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -63,7 +63,7 @@ class Authservice {
     try {
       firebase_auth.UserCredential result = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      firebase_auth.User user = result.user;
+      firebase_auth.User user = result.user!;
 
       // create a new document for the user with the uid
 
