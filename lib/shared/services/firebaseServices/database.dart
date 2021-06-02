@@ -9,7 +9,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  DatabaseService({required this.uid});
 
   //////////////////////////////////////////////////////////////////////////////
   ///////////////////          Booking Collection          /////////////////////
@@ -29,9 +29,9 @@ class DatabaseService {
   List<Users> _userListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Users(
-        fname: doc['Full Name'] ?? '',
-        email: doc['Email'] ?? '',
-        phno: doc['Phone Number'] ?? '',
+        fname: doc['Full Name'],
+        email: doc['Email'],
+        phno: doc['Phone Number'],
       );
     }).toList();
   }
@@ -81,7 +81,7 @@ class DatabaseService {
   List<BusStopData> _busStopListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return BusStopData(
-        stopName: doc['Stop Name'] ?? '',
+        stopName: doc['Stop Name'],
       );
     }).toList();
   }
@@ -129,14 +129,14 @@ class DatabaseService {
   List<TicketData> _bookingList(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return TicketData(
-        bookid: doc['Booking ID'] ?? '',
-        booktime: doc['Booking Time'].toString() ?? '',
-        bookfare: doc['fare'].toString() ?? '',
-        bookfrom: doc['From'] ?? '',
-        bookto: doc['To'] ?? '',
-        bookphno: doc['Phone Number'] ?? '',
-        bookuid: doc['UID'] ?? '',
-        bookbustype: doc['Bus Type'] ?? '',
+        bookid: doc['Booking ID'],
+        booktime: doc['Booking Time'].toString(),
+        bookfare: doc['fare'].toString(),
+        bookfrom: doc['From'],
+        bookto: doc['To'],
+        bookphno: doc['Phone Number'],
+        bookuid: doc['UID'],
+        bookbustype: doc['Bus Type'],
       );
     }).toList();
   }
