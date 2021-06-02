@@ -9,7 +9,7 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function toggleView;
-  RegisterPage({this.toggleView});
+  RegisterPage({required this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -69,8 +69,8 @@ class _RegisterState extends State<RegisterPage> {
                                               const Radius.circular(90.0)),
                                       gradient: new LinearGradient(
                                           colors: [
-                                            Colors.orange[600],
-                                            Colors.red[300]
+                                            Colors.orange.shade600,
+                                            Colors.red.shade300
                                           ],
                                           begin:
                                               const FractionalOffset(0.5, 0.0),
@@ -213,7 +213,7 @@ class _RegisterState extends State<RegisterPage> {
                                           child: ElevatedButton(
                                             onPressed: () async {
                                               clickStatRegister = true;
-                                              if (_formkey.currentState
+                                              if (_formkey.currentState!
                                                   .validate()) {
                                                 setState(() => loading = true);
                                                 dynamic result = await _auth
