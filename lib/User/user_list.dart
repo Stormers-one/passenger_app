@@ -11,7 +11,7 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<List<Users>>(context) ?? [];
+    final users = Provider.of<List<Users>>(context);
     //users.forEach((user) {
     //  print(user.fname);
     //  print(user.email);

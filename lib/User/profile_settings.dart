@@ -20,10 +20,10 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formkey = GlobalKey<FormState>();
 
-  String currentName;
-  String currentphno;
+  String? currentName;
+  String? currentphno;
 
-  PickedFile _image;
+  PickedFile? _image;
   Future uploadPicture(BuildContext context) async {
     //File m = await getImageFileFromAssets('images/profile-icon.png');
     firebase_storage.Reference firebaseStorageref = firebase_storage
@@ -32,7 +32,7 @@ class _SettingsFormState extends State<SettingsForm> {
         .child('profile_image/$userID');
     try {
       firebase_storage.UploadTask uploadTask =
-          firebaseStorageref.putFile(File(_image.path));
+          firebaseStorageref.putFile(File(_image!.path));
       firebase_storage.TaskSnapshot taskSnapshot =
           await uploadTask.whenComplete(() => null);
       Fluttertoast.showToast(msg: 'Profile Picture Uploaded');
@@ -57,7 +57,7 @@ class _SettingsFormState extends State<SettingsForm> {
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          UserData userData = snapshot.data;
+          UserData userData = snapshot.data!;
           return Form(
               key: _formkey,
               child: Column(
@@ -149,7 +149,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                       style: raisedButtonStyle,
                       onPressed: () async {
-                        if (_formkey.currentState.validate()) {
+                        if (_formkey.currentState!.validate()) {
                           await DatabaseService(uid: user.uid).updateUserData(
                               currentName ?? userData.fname,
                               userData.email,

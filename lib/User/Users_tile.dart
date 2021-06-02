@@ -3,8 +3,7 @@ import 'package:passenger_app/User/users_fetch.dart';
 
 class UsersTile extends StatelessWidget {
   final Users user;
-  UsersTile({this.user});
-
+  UsersTile({required this.user});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +22,7 @@ class UsersTile extends StatelessWidget {
             //    radius: 50.0,
             //    backgroundColor: red,
             //  ),
-            title: Text(user.fname),
+            title: Text(user.fname!),
           ),
         ));
   }

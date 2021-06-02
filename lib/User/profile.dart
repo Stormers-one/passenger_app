@@ -89,7 +89,7 @@ class _ProfileState extends State<Profile> {
                         stream: DatabaseService(uid: user.uid).userData,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            UserData userData = snapshot.data;
+                            UserData userData = snapshot.data!;
                             return Form(
                               child: Container(
                                 padding: EdgeInsets.all(20.0),
