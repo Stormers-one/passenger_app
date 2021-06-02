@@ -15,7 +15,7 @@ getBookingId() {
   return bid.floor().toString();
 }
 
-String time1;
+String? time1;
 setTime(String time) {
   if (time.contains('Morning')) {
     time1 = 'morning';
@@ -47,11 +47,11 @@ var busKey = {
 
 int bkey = 0;
 setBusKey(String bst) {
-  bkey = busKey[bst];
+  bkey = busKey[bst]!;
 }
 
 bool booking = true;
-String bidn;
+String? bidn;
 String selectedString = "";
 bool profrefresher = false;
 DateTime selectedDate = DateTime.now();
@@ -73,10 +73,10 @@ bool clickStatLogin = false;
 bool clickStatRegister = false;
 bool clickStatBooking = false;
 
-String username;
-String useremail;
-String userphno;
-String userID;
+String? username;
+String? useremail;
+String? userphno;
+String? userID;
 
 var fare;
 var km = 0.0;
@@ -118,10 +118,10 @@ var perKmFare = {
 };
 getFare(String busT, double km) {
   if (km <= 5) {
-    fare = (minFare[busT]).ceil();
+    fare = (minFare[busT])!.ceil();
     return fare;
   } else {
-    fare = (minFare[busT] + perKmFare[busT] * (km - 5)).ceil();
+    fare = (minFare[busT]! + perKmFare[busT]! * (km - 5)).ceil();
     return fare;
   }
 }
@@ -162,7 +162,7 @@ textInputDecorationNoHint() {
 }
 
 // Profile PIC FIRE STORAGE
-String downURL;
+String? downURL;
 Future getim() async {
   await _getImageFromFireStorage();
 }
@@ -180,7 +180,7 @@ Future<void> _getImageFromFireStorage() async {
   }
 }
 
-String inUrl;
+String? inUrl;
 
 final recentSearch = [];
 const List<String> stops = [
