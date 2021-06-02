@@ -18,8 +18,8 @@ class Maps extends StatefulWidget {
 }
 
 class _Maps extends State<Maps> {
-  TextEditingController _controller;
-  TextEditingController _controller1;
+  TextEditingController? _controller;
+  TextEditingController? _controller1;
   final _formkey = GlobalKey<FormState>();
   bool clickStatMaps = false;
 
@@ -37,8 +37,8 @@ class _Maps extends State<Maps> {
     super.dispose();
   }
 
-  final String documentId;
-  _Maps({this.documentId});
+  // final String documentId;
+  // _Maps({ required this.documentId});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _Maps extends State<Maps> {
           print(snapshot.hasData);
           return Loading();
         } else {
-          List<BusStatic> busData = snapshot.data;
+          List<BusStatic> busData = snapshot.data!;
           return Scaffold(
             backgroundColor: bgColor,
             resizeToAvoidBottomInset: false,
@@ -90,7 +90,7 @@ class _Maps extends State<Maps> {
                                   showSearch(
                                       context: context,
                                       delegate:
-                                          BusSearch("MFrom", _controller));
+                                          BusSearch("MFrom", _controller!));
                                 },
                                 decoration: textInputDecoration("From"),
                                 keyboardType: TextInputType.emailAddress,
@@ -112,7 +112,7 @@ class _Maps extends State<Maps> {
                                     showSearch(
                                         context: context,
                                         delegate:
-                                            BusSearch("MTo", _controller1));
+                                            BusSearch("MTo", _controller1!));
                                   },
                                   decoration: textInputDecoration("To"),
                                   obscureText: false,
@@ -121,9 +121,9 @@ class _Maps extends State<Maps> {
                                   validator: (val) {
                                     if (val!.isEmpty && clickStatMaps) {
                                       return 'This is requied';
-                                    } else if (_controller.text ==
-                                            _controller1.text &&
-                                        _controller.text.isNotEmpty) {
+                                    } else if (_controller!.text ==
+                                            _controller1!.text &&
+                                        _controller!.text.isNotEmpty) {
                                       return 'Both location should not be same';
                                     } else {
                                       return null;
@@ -137,8 +137,8 @@ class _Maps extends State<Maps> {
                                 width: 200,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    selectedMapsFrom = _controller.text;
-                                    selectedMapsTo = _controller1.text;
+                                    selectedMapsFrom = _controller!.text;
+                                    selectedMapsTo = _controller1!.text;
                                     clickStatMaps = true;
                                     if (_formkey.currentState!.validate()) {
                                       appState.sendRequest(selectedMapsFrom,
