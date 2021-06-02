@@ -6,7 +6,7 @@ class FireStorageState with ChangeNotifier {
   static String _downURL =
       'https://thumbs.dreamstime.com/b/no-user-profile-picture-hand-drawn-illustration-53840792.jpg';
   String get downUrl => _downURL;
-  String userID;
+  String? userID;
 
   // Profile PIC FIRE STORAGE
   Future getim() async {
