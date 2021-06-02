@@ -8,12 +8,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
 class MapState with ChangeNotifier {
-  static LatLng _initialPosition;
+  static LatLng _initialPosition = LatLng(0.0, 0.0);
   LatLng _lastPosition = _initialPosition;
   bool locationServiceActive = true;
   final Set<Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
-  GoogleMapController _mapController;
+  GoogleMapController? _mapController;
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
 
   // Map access Split START
@@ -23,9 +23,9 @@ class MapState with ChangeNotifier {
   // Map access Split END
 
   // Distance START
-  static String _distance;
-  static String _duration;
-  static List<String> _gmapData;
+  static String _distance = "";
+  static String _duration = "";
+  static List<String> _gmapData = [];
   List<String> get gmapData => _gmapData;
   String get distance => _distance;
   String get duration => _duration;
@@ -36,7 +36,7 @@ class MapState with ChangeNotifier {
   LatLng get initialPosition => _initialPosition;
   LatLng get lastPosition => _lastPosition;
   GoogleMapsServices get googleMapsServices => _googleMapsServices;
-  GoogleMapController get mapController => _mapController;
+  GoogleMapController get mapController => _mapController!;
   Set<Marker> get markers => _markers;
   Set<Polyline> get polyLines => _polyLines;
 
@@ -46,7 +46,7 @@ class MapState with ChangeNotifier {
     _setCustomMapPin();
   }
 
-  static BitmapDescriptor _pinLocationIcon;
+  static BitmapDescriptor? _pinLocationIcon;
   void _setCustomMapPin() async {
     _pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), 'assets/images/bus_loc.png');
@@ -88,7 +88,7 @@ class MapState with ChangeNotifier {
     notifyListeners();
   }
 
-  Color color;
+  Color? color;
   void _addBusMarker(LatLng location, String address, int count) {
     if (count < 20) {
       color = crowdLow;
@@ -104,7 +104,7 @@ class MapState with ChangeNotifier {
         markerId: MarkerId(address.toString()),
         position: location,
         infoWindow: InfoWindow(title: address),
-        icon: _pinLocationIcon));
+        icon: _pinLocationIcon!));
     notifyListeners();
   }
 

@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
                                   child: FadeInImage.assetNetwork(
                                     fadeInCurve: Curves.bounceIn,
                                     placeholder: 'assets/images/loading.gif',
-                                    image: downURL,
+                                    image: downURL!,
                                     fit: BoxFit.cover,
                                   ),
                                 ),

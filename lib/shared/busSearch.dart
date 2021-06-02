@@ -26,13 +26,13 @@ class BusSearch extends SearchDelegate<String> {
           progress: transitionAnimation,
         ),
         onPressed: () {
-          close(context, null);
+          close(context, 'null');
         });
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return null;
+    return Container();
   }
 
   @override
@@ -60,7 +60,7 @@ class BusSearch extends SearchDelegate<String> {
           } else if (fromto == "BTo") {
             selectedBookingTo = selectedString;
           }
-          close(context, null);
+          close(context, "null");
           controller.text = selectedString;
           return controller;
         },
