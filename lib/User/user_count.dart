@@ -4,6 +4,7 @@ import 'package:passenger_app/User/user_list.dart';
 import 'package:passenger_app/User/users_fetch.dart';
 import 'package:passenger_app/shared/drawer.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
+import 'package:passenger_app/shared/model/user.dart';
 import 'package:provider/provider.dart';
 
 class UsersCount extends StatelessWidget {
@@ -19,9 +20,10 @@ class UsersCount extends StatelessWidget {
     //         );
     //       });
     // }
+    final userID = Provider.of<User>(context);
     return StreamProvider<List<Users>>.value(
       initialData: [],
-      value: DatabaseService().users,
+      value: DatabaseService(uid: userID.uid).users,
       child: MaterialApp(
         title: 'Homepage',
         home: Scaffold(
