@@ -8,8 +8,8 @@ import 'package:passenger_app/shared/loading.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function toggleView;
-  RegisterPage({required this.toggleView});
+  // final Function toggleView;
+  // RegisterPage({required this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();

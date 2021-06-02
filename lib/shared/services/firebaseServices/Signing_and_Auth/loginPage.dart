@@ -15,8 +15,8 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  final Function toggleView;
-  LoginPage({this.toggleView});
+  // final Function toggleView;
+  // LoginPage({this.toggleView});
 
   @override
   _LoginState createState() => _LoginState();
@@ -31,7 +31,7 @@ class _LoginState extends State<LoginPage> {
   String password = "";
   String error = "";
 
-  User user;
+  User? user;
   void initState() {
     super.initState();
   }
@@ -111,8 +111,8 @@ class _LoginState extends State<LoginPage> {
                                           ),
                                           gradient: new LinearGradient(
                                               colors: [
-                                                Colors.orange[600],
-                                                Colors.red[300]
+                                                Colors.orange.shade600,
+                                                Colors.red.shade300
                                               ],
                                               begin: const FractionalOffset(
                                                   0.5, 0.0),

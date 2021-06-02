@@ -8,9 +8,8 @@ import 'package:passenger_app/shared/loading.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 
 class ResetPage extends StatefulWidget {
-  final Function toggleView;
-  ResetPage({required this.toggleView});
-
+  // final Function toggleView;
+  // ResetPage({required this.toggleView});
   @override
   _ResetState createState() => _ResetState();
 }

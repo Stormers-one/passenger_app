@@ -154,12 +154,12 @@ class FooterWaveClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
-class YellowCircleClipper extends CustomClipper<Rect> {
-  @override
-  Rect getClip(Size size) {
-    return null;
-  }
+// class YellowCircleClipper extends CustomClipper<Rect> {
+//   @override
+//   Rect getClip(Size size) {
+//     return Rect();
+//   }
 
-  @override
-  bool shouldReclip(CustomClipper<Rect> oldClipper) => false;
-}
+//   @override
+//   bool shouldReclip(CustomClipper<Rect> oldClipper) => false;
+// }
