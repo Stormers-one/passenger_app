@@ -140,7 +140,7 @@ class _Maps extends State<Maps> {
                                     selectedMapsFrom = _controller.text;
                                     selectedMapsTo = _controller1.text;
                                     clickStatMaps = true;
-                                    if (_formkey.currentState.validate()) {
+                                    if (_formkey.currentState!.validate()) {
                                       appState.sendRequest(selectedMapsFrom,
                                           selectedMapsTo, busData);
                                       Navigator.push(

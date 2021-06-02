@@ -239,7 +239,7 @@ class _BookingState extends State<Booking> {
                                     loading = false;
                                     fare = getFare(_currentBusType, distDouble);
                                     clickStatBooking = true;
-                                    if (_formkey.currentState.validate()) {
+                                    if (_formkey.currentState!.validate()) {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
