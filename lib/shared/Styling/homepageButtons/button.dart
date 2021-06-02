@@ -4,7 +4,7 @@ import 'package:passenger_app/Menu/Maps/maps.dart';
 import 'package:passenger_app/Menu/Timing/timing.dart';
 import 'package:passenger_app/Menu/Tracking/tracking.dart';
 // import '../homepageButtons/buttonClass.dart';
-import '../shared/Styling/colors.dart';
+import '../colors.dart';
 // import '../homepageButtons/data.dart';
 
 class Button extends StatelessWidget {
@@ -13,7 +13,11 @@ class Button extends StatelessWidget {
   final String text;
   final BuildContext context;
   final int index = 0;
-  Button({this.image, this.route, this.text, this.context});
+  Button(
+      {required this.image,
+      required this.route,
+      required this.text,
+      required this.context});
   // @override
   Widget build(BuildContext context) {
     return Column(
