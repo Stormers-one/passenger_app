@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:passenger_app/shared/drawer.dart';
 
 class Search extends StatelessWidget {
   @override
@@ -8,7 +7,6 @@ class Search extends StatelessWidget {
       title: 'Search',
       theme: ThemeData(fontFamily: 'Quicksand-Medium'),
       home: Scaffold(
-        drawer: DrawerBuild(),
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
           elevation: 0,

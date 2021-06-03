@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
-import 'package:passenger_app/shared/drawer.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,7 +30,6 @@ class Reports extends StatelessWidget {
           title: Text('Reports'),
           backgroundColor: appBarColor,
         ),
-        drawer: DrawerBuild(),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());

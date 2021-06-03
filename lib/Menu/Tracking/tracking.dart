@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/constants.dart';
-import 'package:passenger_app/shared/drawer.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'mapview.dart';
 
@@ -18,7 +17,6 @@ class Tracking extends StatelessWidget {
           title: Text('Tracking'),
           backgroundColor: appBarColor,
         ),
-        drawer: DrawerBuild(),
         body: new GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
@@ -78,6 +76,43 @@ class Tracking extends StatelessWidget {
                     ],
                   ),
                 ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Track extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'Quicksand-Medium'),
+      title: 'Track',
+      home: Scaffold(
+        backgroundColor: Colors.orange[100],
+        appBar: AppBar(
+          elevation: 0,
+          title: Text('Track'),
+        ),
+        body: new GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                constraints: BoxConstraints.expand(
+                  height:
+                      Theme.of(context).textTheme.headline4!.fontSize! * 1.1 +
+                          200.0,
+                ),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue[600],
+                alignment: Alignment.center,
+              )
+            ],
           ),
         ),
       ),

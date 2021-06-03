@@ -53,13 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
                         Padding(
                           padding: EdgeInsets.only(top: 10.0),
                         ),
-                        // Text(
-                        //   'OK',
-                        //   style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontWeight: FontWeight.bold,
-                        //       fontSize: 24.0),
-                        // )
                       ],
                     ),
                   ),

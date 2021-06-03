@@ -3,7 +3,6 @@ import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
-import 'package:passenger_app/shared/drawer.dart';
 import 'package:passenger_app/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -22,7 +21,6 @@ class TicketDisplay extends StatelessWidget {
             title: Text('Your Ticket'),
             backgroundColor: red,
             actions: <Widget>[]),
-        drawer: DrawerBuild(),
         body: SafeArea(
           child: Center(
             child: ListView(

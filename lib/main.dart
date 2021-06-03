@@ -11,23 +11,34 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider.value(
-      value: MapState(),
+    ChangeNotifierProvider<MapState>(
+      // value: MapState(),
+      create: (context) => MapState(),
+    ),
+    StreamProvider<User>.value(
+      initialData: User(),
+      value: Authservice().user,
     )
   ], child: Odukomban()));
 }
 
-class Odukomban extends StatelessWidget {
+class Odukomban extends StatefulWidget {
+  @override
+  _Odukomban createState() => _Odukomban();
+}
+
+class _Odukomban extends State<Odukomban> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      initialData: User(),
-      value: Authservice().user,
-      child: new MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Quicksand-Medium'),
-        home: SplashScreen(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Quicksand-Medium'),
+      home: SplashScreen(),
     );
   }
 }

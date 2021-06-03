@@ -113,6 +113,7 @@ flutter:
     - assets/images/bluetooth.png
     - assets/images/loading.gif
     - assets/images/bus_loc.png
+    - assets/images/calendar.png
 
   fonts:
     - family: Quicksand-SemiBold

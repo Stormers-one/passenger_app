@@ -22,6 +22,12 @@ class Buttons extends ButtonClass {
       route: 'Booking',
       image: 'assets/images/seatbus.png',
     ),
+    ButtonClass(
+        text: 'Bookings',
+        route: 'BookingList',
+        image: 'assets/images/calendar.png'),
+    ButtonClass(
+        text: 'Help', route: 'Help', image: 'assets/images/emergency.png'),
   ];
   static ButtonClass fetchAny() {
     return Buttons.items[0];

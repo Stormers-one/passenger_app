@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
-import 'package:passenger_app/shared/drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:passenger_app/shared/constants.dart';
 import 'package:passenger_app/shared/model/user.dart';
@@ -18,9 +17,7 @@ class _Help extends State<Help> {
 
   List<String> devs = [
     'Anandu R',
-    'Afthab Nihar',
     'Aishwarya Michael',
-    'Rachel Kunjumon',
     'Smitha John',
     'Kennith Philips'
   ];
@@ -58,7 +55,6 @@ class _Help extends State<Help> {
         //   backgroundColor: red,
         //   title: Text('Help'),
         // ),
-        drawer: DrawerBuild(),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());

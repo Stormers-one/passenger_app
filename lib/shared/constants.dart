@@ -162,7 +162,8 @@ textInputDecorationNoHint() {
 }
 
 // Profile PIC FIRE STORAGE
-String? downURL;
+String downURL =
+    'https://thumbs.dreamstime.com/b/no-user-profile-picture-hand-drawn-illustration-53840792.jpg';
 Future getim() async {
   await _getImageFromFireStorage();
 }
