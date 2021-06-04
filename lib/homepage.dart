@@ -36,56 +36,94 @@ class _HomepageState extends State<Homepage> {
     super.initState();
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: Text("Exit Diaglog"),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        content: Text("Do You Really want to Exit?"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 5),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ).then((value) => value ?? false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<User>(context);
     print('[Homepage] User: ' + userID.uid.toString());
-    final List<Widget> _children = [Home(), Profile()];
-    final List<List<Widget>> _appBarChildren = [
-      [Logout(auth: auth)],
-      [ProfileSettings()]
+    final List<Widget> _children = [
+      Home(),
+      Profile(
+        auth: auth,
+      )
     ];
+    // final List<List<Widget>> _appBarChildren = [
+    //   [Logout(auth: auth)],
+    //   [ProfileSettings()]
+    // ];
     // final appState = Provider.of<MapState>(context);
     // print('Homepage: ' + appState.initialPosition.toString());
     return ChangeNotifierProvider(
       create: (context) => MapState(),
       builder: (context, child) => MaterialApp(
-        home: Scaffold(
-          backgroundColor: bgColor,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: appBarColor,
-            actions: _appBarChildren[_selectedIndex],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.school),
-              //   label: 'School',
-              // ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber.shade800,
-            onTap: _onItemTapped,
-          ),
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: SafeArea(
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: SizedBox.expand(
-                  child: _children[_selectedIndex],
+        home: WillPopScope(
+          onWillPop: _onBackPressed,
+          child: Scaffold(
+            backgroundColor: bgColor,
+            // appBar: AppBar(
+            //   elevation: 0,
+            //   backgroundColor: appBarColor,
+            //   actions: _appBarChildren[_selectedIndex],
+            // ),
+            bottomNavigationBar: BottomNavigationBar(
+              // backgroundColor: appBarColor,
+              backgroundColor: Colors.transparent,
+
+              elevation: 0,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.school),
+                //   label: 'School',
+                // ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: raspberryColor,
+              unselectedItemColor: lavender,
+              selectedFontSize: 15,
+              selectedIconTheme: IconThemeData(size: 26),
+              onTap: _onItemTapped,
+            ),
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: SafeArea(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: SizedBox.expand(
+                    child: _children[_selectedIndex],
+                  ),
                 ),
               ),
             ),
@@ -133,7 +171,7 @@ class Home extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: 380,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       // color: Colors.amber,
                       width: MediaQuery.of(context).size.width,
                       child: SizedBox.expand(child: Landing()),
@@ -160,6 +198,8 @@ class Home extends StatelessWidget {
 }
 
 class Profile extends StatelessWidget {
+  final auth;
+  Profile({this.auth});
   @override
   Widget build(context) {
     final userID = Provider.of<User>(context);
@@ -171,9 +211,35 @@ class Profile extends StatelessWidget {
           if (snapshot.hasData) {
             UserData userData = snapshot.data!;
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 50),
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          child: ProfileSettings(),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          child: Logout(auth: auth),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -198,72 +264,78 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Form(
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        new Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                        ),
-                        new TextField(
-                          enabled: false,
-                          decoration: new InputDecoration(
-                            labelText: userData.fname,
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            icon: Icon(Icons.account_box),
-                            fillColor: Colors.grey.shade300,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: new BorderRadius.circular(10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Form(
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          new Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                          ),
+                          new TextField(
+                            enabled: false,
+                            decoration: new InputDecoration(
+                              labelText: userData.fname,
+                              labelStyle:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                              icon: Icon(Icons.account_box),
+                              fillColor: Colors.grey.shade300,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                                borderRadius: new BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                        new Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                        ),
-                        new TextField(
-                          enabled: false,
-                          decoration: new InputDecoration(
-                            labelText: userData.email,
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            icon: Icon(Icons.email),
-                            fillColor: Colors.grey[300],
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: new BorderRadius.circular(10),
+                          new Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                          ),
+                          new TextField(
+                            enabled: false,
+                            decoration: new InputDecoration(
+                              labelText: userData.email,
+                              labelStyle:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                              icon: Icon(Icons.email),
+                              fillColor: Colors.grey[300],
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                                borderRadius: new BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                        new Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                        ),
-                        new TextField(
-                          enabled: false,
-                          decoration: new InputDecoration(
-                            labelText: userData.phno,
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                            icon: Icon(Icons.phone),
-                            fillColor: Colors.grey[300],
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: new BorderRadius.circular(10),
+                          new Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                          ),
+                          new TextField(
+                            enabled: false,
+                            decoration: new InputDecoration(
+                              labelText: userData.phno,
+                              labelStyle:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                              icon: Icon(Icons.phone),
+                              fillColor: Colors.grey[300],
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                                borderRadius: new BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -306,15 +378,21 @@ class ProfileSettings extends StatelessWidget {
       );
     }
 
-    return TextButton.icon(
-      onPressed: () => _showSettengsPanel(),
-      icon: Icon(
-        Icons.settings,
-        color: Colors.white,
-      ),
-      label: Text(
-        'Edit Profile',
-        style: TextStyle(color: Colors.white),
+    return Container(
+      // margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      decoration: BoxDecoration(
+          color: appBarColor,
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: TextButton.icon(
+        onPressed: () => _showSettengsPanel(),
+        icon: Icon(
+          Icons.settings,
+          color: Colors.black,
+        ),
+        label: Text(
+          'Edit Profile',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
@@ -325,27 +403,33 @@ class Logout extends StatelessWidget {
   Logout({this.auth});
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      icon: Icon(
-        Icons.person,
-        color: Colors.white,
-      ),
-      label: Text(
-        'Logout',
-        style: TextStyle(
-          color: Colors.white,
+    return Container(
+      // margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      decoration: BoxDecoration(
+          color: appBarColor,
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: TextButton.icon(
+        icon: Icon(
+          Icons.person,
+          color: Colors.black,
         ),
+        label: Text(
+          'Logout',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        onPressed: () async {
+          clickStatLogin = false;
+          clickStatRegister = false;
+          await auth.signOut();
+          // Navigator.pop(context);
+          Navigator.pop(
+            context,
+            MaterialPageRoute(builder: (context) => Wrapper()),
+          );
+        },
       ),
-      onPressed: () async {
-        clickStatLogin = false;
-        clickStatRegister = false;
-        await auth.signOut();
-        // Navigator.pop(context);
-        Navigator.pop(
-          context,
-          MaterialPageRoute(builder: (context) => Wrapper()),
-        );
-      },
     );
   }
 }
