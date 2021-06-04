@@ -8,7 +8,6 @@ import 'package:passenger_app/shared/Styling/homepageButtons/data.dart';
 import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
 import 'package:passenger_app/shared/constants.dart';
-import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';

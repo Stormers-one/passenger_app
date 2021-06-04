@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:passenger_app/Menu/selection.dart';
+import 'package:passenger_app/Menu/landing.dart';
 import 'package:passenger_app/Wrapper.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
@@ -150,7 +150,7 @@ class Home extends StatelessWidget {
                       height: 380,
                       color: Colors.amber,
                       width: MediaQuery.of(context).size.width,
-                      child: Selection(),
+                      child: Landing(),
                     ),
                     Container(
                       child: Row(
