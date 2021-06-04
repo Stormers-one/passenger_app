@@ -24,7 +24,7 @@ Future<void> main() async {
         ChangeNotifierProvider<MapState>(
           // value: MapState(),
           create: (context) => MapState(),
-          child: Wrapper(),
+          child: Odukomban(),
         ),
         StreamProvider<User>.value(
           initialData: User(),
