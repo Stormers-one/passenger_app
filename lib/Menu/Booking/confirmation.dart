@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -13,15 +15,15 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class BookingConfirm extends StatefulWidget {
-  final fare;
-  BookingConfirm({required this.fare});
-  _BookingConfirm createState() => _BookingConfirm(fare: fare);
+  // final Double? fare;
+  // BookingConfirm({required this.fare});
+  _BookingConfirm createState() => _BookingConfirm();
 }
 
 class _BookingConfirm extends State<BookingConfirm> {
   Razorpay? _razorpay;
-  var fare;
-  _BookingConfirm({required this.fare});
+  // var fare;
+  // _BookingConfirm({required this.fare});
   bool loading = false;
   void initState() {
     super.initState();

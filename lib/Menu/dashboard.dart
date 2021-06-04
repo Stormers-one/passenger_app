@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:passenger_app/Menu/Booking/confirmation.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/services/mapServices/mapState.dart';
@@ -10,15 +11,15 @@ import '../../shared/constants.dart';
 import '../../shared/loading.dart';
 
 class Dashboard extends StatefulWidget {
-  final fare;
-  Dashboard({required this.fare, Key? key}) : super(key: key);
+  // final fare;
+  // Dashboard({required this.fare, Key? key}) : super(key: key);
   @override
-  _DashboardState createState() => _DashboardState(fare: fare);
+  _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  final fare;
-  _DashboardState({this.fare});
+  // final fare;
+  // _DashboardState({this.fare});
   GoogleMapController? mapController;
   LatLng? _center;
   Position? currentLocation;
@@ -121,7 +122,8 @@ class _DashboardState extends State<Dashboard> {
                               child:
                                   Icon(Icons.arrow_back, color: Colors.black),
                             ),
-                            onTap: () => Navigator.of(context).pop(),
+                            onTap: () => Navigator.popUntil(
+                                context, ModalRoute.withName('/')),
                           ),
                         ),
                         SizedBox(
@@ -131,16 +133,42 @@ class _DashboardState extends State<Dashboard> {
                           children: <Widget>[
                             Expanded(
                               flex: 1,
-                              child: InfoField(
-                                  fieldData: selectedBookingFrom,
-                                  fieldName: 'From: '),
+                              child: Container(),
                             ),
-                            SizedBox(width: 8),
+                            Expanded(
+                                flex: 2,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: raspberryColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        selectedBookingFrom,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Icon(MdiIcons.swapHorizontalBold,
+                                          color: Colors.white),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        selectedBookingTo,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                )),
                             Expanded(
                               flex: 1,
-                              child: InfoField(
-                                  fieldData: selectedBookingTo,
-                                  fieldName: 'To: '),
+                              child: Container(),
                             ),
                           ],
                         ),
@@ -186,7 +214,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               DraggableScrollableSheet(
-                  initialChildSize: 0.3,
+                  initialChildSize: 0.2,
                   minChildSize: 0.2,
                   maxChildSize: 0.7,
                   builder: (BuildContext context,
@@ -196,8 +224,8 @@ class _DashboardState extends State<Dashboard> {
                         // height: MediaQuery.of(context).size.height * 0.5,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20)),
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25)),
                           color: Colors.white,
                         ),
                         child: ListView(
@@ -205,9 +233,7 @@ class _DashboardState extends State<Dashboard> {
                             controller: scrollController,
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             children: <Widget>[
-                              BookingConfirm(
-                                fare: fare,
-                              ),
+                              BookingConfirm(),
                             ]),
                       ),
                     );
@@ -245,8 +271,9 @@ class InfoField extends StatelessWidget {
               width: 100,
               decoration: BoxDecoration(
                 color: red,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  bottomLeft: Radius.circular(20.0),
                 ),
               ),
               child: Text(

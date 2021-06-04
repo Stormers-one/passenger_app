@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/Menu/landing.dart';
+import 'package:passenger_app/User/profile_settings.dart';
 import 'package:passenger_app/Wrapper.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
@@ -21,7 +22,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  final Authservice _auth = new Authservice();
+  final Authservice auth = new Authservice();
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -39,6 +40,10 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     final userID = Provider.of<User>(context);
     final List<Widget> _children = [Home(), Profile()];
+    final List<List<Widget>> _appBarChildren = [
+      [Logout(auth: auth)],
+      [ProfileSettings()]
+    ];
     // final appState = Provider.of<MapState>(context);
     // print('Homepage: ' + appState.initialPosition.toString());
     return ChangeNotifierProvider(
@@ -49,29 +54,7 @@ class _HomepageState extends State<Homepage> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: appBarColor,
-            actions: <Widget>[
-              TextButton.icon(
-                icon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  'Logout',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
-                  clickStatLogin = false;
-                  clickStatRegister = false;
-                  await _auth.signOut();
-                  Navigator.pop(
-                    context,
-                    MaterialPageRoute(builder: (context) => Wrapper()),
-                  );
-                },
-              )
-            ],
+            actions: _appBarChildren[_selectedIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
@@ -148,9 +131,9 @@ class Home extends StatelessWidget {
                   children: [
                     Container(
                       height: 380,
-                      color: Colors.amber,
+                      // color: Colors.amber,
                       width: MediaQuery.of(context).size.width,
-                      child: Landing(),
+                      child: SizedBox.expand(child: Landing()),
                     ),
                     Container(
                       child: Row(
@@ -302,5 +285,64 @@ class Profile extends StatelessWidget {
             return Loading();
           }
         });
+  }
+}
+
+class ProfileSettings extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    void _showSettengsPanel() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            child: SettingsForm(),
+          );
+        },
+      );
+    }
+
+    return TextButton.icon(
+      onPressed: () => _showSettengsPanel(),
+      icon: Icon(
+        Icons.settings,
+        color: Colors.white,
+      ),
+      label: Text(
+        'Edit Profile',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+}
+
+class Logout extends StatelessWidget {
+  final auth;
+  Logout({this.auth});
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      icon: Icon(
+        Icons.person,
+        color: Colors.white,
+      ),
+      label: Text(
+        'Logout',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      onPressed: () async {
+        clickStatLogin = false;
+        clickStatRegister = false;
+        await auth.signOut();
+        // Navigator.pop(context);
+        Navigator.pop(
+          context,
+          MaterialPageRoute(builder: (context) => Wrapper()),
+        );
+      },
+    );
   }
 }

@@ -6,7 +6,22 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange[300],
+      color: Colors.transparent,
+      child: Center(
+        child: SpinKitFadingFour(
+          color: red,
+          size: 90.0,
+        ),
+      ),
+    );
+  }
+}
+
+class LoadingSignin extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
       child: Center(
         child: SpinKitFadingFour(
           color: red,

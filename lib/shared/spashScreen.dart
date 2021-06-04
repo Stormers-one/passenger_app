@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:passenger_app/Wrapper.dart';
+import 'package:passenger_app/shared/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,9 +13,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Wrapper())));
+        Duration(seconds: 1, milliseconds: 500),
+        () => Navigator.popAndPushNamed(
+              context,
+              WRAPPER,
+            ));
   }
 
   @override

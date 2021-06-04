@@ -1,9 +1,6 @@
 const String HOMEPAGE = '/Homepage',
-    ADDRESS = '/Address',
-    ADDRESS_ADD = '/AddressAdd',
-    CONFIRMATION = '/Confirmation',
-    MY_ORDERS = '/Bookings',
-    PRODUCT = '/Dashboard',
-    PROFILE = '/Profile',
+    BOOKINGS = '/Bookings',
+    DASHBOARD = '/Dashboard',
     CREDITS = '/Credit',
+    TICKET = '/Ticket',
     WRAPPER = '/Wrapper';

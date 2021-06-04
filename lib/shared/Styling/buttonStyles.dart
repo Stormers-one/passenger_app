@@ -3,7 +3,7 @@ import 'package:passenger_app/shared/Styling/colors.dart';
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.grey,
-  primary: red,
+  primary: darkSeaGreen,
   minimumSize: Size(88, 36),
   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
   shape: RoundedRectangleBorder(

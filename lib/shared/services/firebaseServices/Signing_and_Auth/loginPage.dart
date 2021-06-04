@@ -57,7 +57,7 @@ class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Loading()
+        ? LoadingSignin()
         : WillPopScope(
             onWillPop: _onBackPressed,
             child: Scaffold(

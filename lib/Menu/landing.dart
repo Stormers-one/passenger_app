@@ -1,23 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:passenger_app/Menu/Booking/confirmation.dart';
 import 'package:passenger_app/Menu/dashboard.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/busSearch.dart';
 import 'package:passenger_app/shared/loading.dart';
 import 'package:passenger_app/shared/model/busStatic.dart';
-import 'package:passenger_app/shared/services/firebaseServices/auth.dart';
+import 'package:passenger_app/shared/routes.dart';
 import 'package:passenger_app/shared/services/mapServices/mapState.dart';
-import '../shared/Styling/colors.dart';
 import 'package:passenger_app/shared/constants.dart';
 import '../Shared/services/mapServices/googlemapservice.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
-import 'package:passenger_app/shared/model/user.dart';
 import 'package:provider/provider.dart';
-import 'package:passenger_app/shared/Styling/colors.dart';
 
 class Landing extends StatefulWidget {
   Landing({Key? key}) : super(key: key);
@@ -32,8 +27,7 @@ class _LandingState extends State<Landing> {
   TextEditingController? _controllerTo;
   TextEditingController? _controllerExtra;
   final _formkey = GlobalKey<FormState>();
-  bool clickStatbooking = false;
-  bool clickStatTiming = false;
+  bool clickStatus = false;
   var queryResult = [];
   var busStopName = [];
   int count = 0;
@@ -139,9 +133,6 @@ class _LandingState extends State<Landing> {
     this.distDouble = double.parse(dist);
     distancing(distDouble!);
   }
-
-  bool clickStatBooking = false;
-
   // MapState appState = MapState();
 
   @override
@@ -156,170 +147,193 @@ class _LandingState extends State<Landing> {
             return Loading();
           } else {
             List<BusStatic> busData = snapshot.data!;
-            return Container(
-              color: bgColor,
-              child: ListView(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    child: Form(
-                      key: _formkey,
-                      autovalidateMode: AutovalidateMode.always,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _controllerFrom,
-                            style: TextStyle(color: Colors.black),
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              showSearch(
-                                  context: context,
-                                  delegate:
-                                      BusSearch("BFrom", _controllerFrom!));
-                            },
-                            decoration: textInputDecoration("From"),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorWidth: 0,
-                            autofocus: false,
-                            validator: (val) => val!.isEmpty && clickStatBooking
-                                ? 'This is required'
-                                : null,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            controller: _controllerTo,
-                            style: TextStyle(color: Colors.black),
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              showSearch(
-                                  context: context,
-                                  delegate: BusSearch("BTo", _controllerTo!));
-                            },
-                            decoration: textInputDecoration("To"),
-                            obscureText: false,
-                            keyboardType: TextInputType.text,
-                            cursorWidth: 0,
-                            validator: (val) {
-                              if (val!.isEmpty && clickStatBooking) {
-                                return 'This is requied';
-                              } else if (_controllerFrom!.text ==
-                                      _controllerTo!.text &&
-                                  _controllerFrom!.text.isNotEmpty) {
-                                return 'Both location should not be same';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          DropdownButtonFormField(
-                            hint: Text(
-                              'Time',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            value:
-                                _currenttime.isNotEmpty ? _currenttime : null,
-                            items: bustime
-                                .map((value) => DropdownMenuItem(
-                                      value: value,
-                                      child: Text('$value'),
-                                    ))
-                                .toList(),
-                            isExpanded: true,
-                            onChanged: (val) => setState(() {
-                              _currenttime = val.toString();
-                              setTime(_currenttime);
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            }),
-                            decoration: textInputDecorationNoHint(),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          DropdownButtonFormField(
-                            hint: Text(
-                              'Bus Type',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            value: _currentBusType.isNotEmpty
-                                ? _currentBusType
-                                : null,
-                            items: bustype
-                                .map((value) => DropdownMenuItem(
-                                      value: value,
-                                      child: Text('$value'),
-                                    ))
-                                .toList(),
-                            isExpanded: true,
-                            onChanged: (val) => setState(() {
-                              _currentBusType = val.toString();
-                              selectedBookingBusType = val.toString();
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            }),
-                            decoration: textInputDecorationNoHint(),
-                            validator: (value) {
-                              if (value == null && clickStatBooking) {
-                                return "Select The Bus Type";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          SizedBox(
-                            height: 50,
-                            width: 200,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                loading = true;
-                                selectedBookingFrom = _controllerFrom!.text;
-                                selectedBookingTo = _controllerTo!.text;
-                                await travel(
-                                    selectedBookingFrom, selectedBookingTo);
-                                await appState.sendRequest(selectedBookingFrom,
-                                    selectedBookingTo, busData);
-                                print('After selection:' +
-                                    appState.initialPosition.toString());
-
-                                loading = false;
-                                fare = getFare(_currentBusType, distDouble!);
-                                clickStatBooking = true;
-                                if (_formkey.currentState!.validate()) {
-                                  if (_currentBusType.isEmpty || bkey == 0) {
-                                    inUrl =
-                                        'https://www.aanavandi.com//search/results/source/' +
-                                            _controllerFrom!.text +
-                                            '/destination/' +
-                                            _controllerTo!.text +
-                                            '/timing/$time1';
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Dashboard(fare: fare!)));
+            return Stack(
+              children: <Widget>[
+                Container(
+                  color: Colors.transparent,
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(30, 1, 30, 1),
+                        child: Form(
+                          key: _formkey,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              TextFormField(
+                                controller: _controllerFrom,
+                                style: TextStyle(color: Colors.black),
+                                onTap: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  showSearch(
+                                      context: context,
+                                      delegate:
+                                          BusSearch("BFrom", _controllerFrom!));
+                                },
+                                decoration: textInputDecoration("From"),
+                                keyboardType: TextInputType.emailAddress,
+                                cursorWidth: 0,
+                                autofocus: false,
+                                validator: (val) => val!.isEmpty && clickStatus
+                                    ? 'This is required'
+                                    : null,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: _controllerTo,
+                                style: TextStyle(color: Colors.black),
+                                onTap: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  showSearch(
+                                      context: context,
+                                      delegate:
+                                          BusSearch("BTo", _controllerTo!));
+                                },
+                                decoration: textInputDecoration("To"),
+                                obscureText: false,
+                                keyboardType: TextInputType.text,
+                                cursorWidth: 0,
+                                validator: (val) {
+                                  if (val!.isEmpty && clickStatus) {
+                                    return 'This is requied';
+                                  } else if (_controllerFrom!.text ==
+                                          _controllerTo!.text &&
+                                      _controllerFrom!.text.isNotEmpty) {
+                                    return 'Both location should not be same';
+                                  } else {
+                                    return null;
                                   }
-                                }
-                              },
-                              child: const Text('Proceed',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white)),
-                              style: raisedButtonStyle,
-                            ),
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              DropdownButtonFormField(
+                                hint: Text(
+                                  'Time',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                value: _currenttime.isNotEmpty
+                                    ? _currenttime
+                                    : null,
+                                items: bustime
+                                    .map((value) => DropdownMenuItem(
+                                          value: value,
+                                          child: Text('$value'),
+                                        ))
+                                    .toList(),
+                                isExpanded: true,
+                                onChanged: (val) => setState(() {
+                                  _currenttime = val.toString();
+                                  setTime(_currenttime);
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                }),
+                                decoration: textInputDecorationNoHint(),
+                                validator: (value) {
+                                  if (value == null && clickStatus) {
+                                    return "Select Bus Timing";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              DropdownButtonFormField(
+                                hint: Text(
+                                  'Bus Type',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                value: _currentBusType.isNotEmpty
+                                    ? _currentBusType
+                                    : null,
+                                items: bustype
+                                    .map((value) => DropdownMenuItem(
+                                          value: value,
+                                          child: Text('$value'),
+                                        ))
+                                    .toList(),
+                                isExpanded: true,
+                                onChanged: (val) => setState(() {
+                                  _currentBusType = val.toString();
+                                  selectedBookingBusType = val.toString();
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                }),
+                                decoration: textInputDecorationNoHint(),
+                                validator: (value) {
+                                  if (value == null && clickStatus) {
+                                    return "Select The Bus Type";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              SizedBox(
+                                height: 50,
+                                width: 200,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    loading = true;
+                                    selectedBookingFrom = _controllerFrom!.text;
+                                    selectedBookingTo = _controllerTo!.text;
+                                    await travel(
+                                        selectedBookingFrom, selectedBookingTo);
+                                    await appState.sendRequest(
+                                        selectedBookingFrom,
+                                        selectedBookingTo,
+                                        busData);
+                                    print('After selection:' +
+                                        appState.initialPosition.toString());
+                                    loading = false;
+                                    fare =
+                                        getFare(_currentBusType, distDouble!);
+                                    clickStatus = true;
+                                    if (_formkey.currentState!.validate()) {
+                                      if (_currentBusType.isEmpty ||
+                                          bkey == 0) {
+                                        inUrl =
+                                            'https://www.aanavandi.com//search/results/source/' +
+                                                _controllerFrom!.text +
+                                                '/destination/' +
+                                                _controllerTo!.text +
+                                                '/timing/$time1';
+                                        setState(() {});
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Dashboard()));
+                                      }
+                                    }
+                                  },
+                                  child: const Text('Proceed',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white)),
+                                  style: raisedButtonStyle,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                loading ? Loading() : Container(),
+              ],
             );
           }
         });
