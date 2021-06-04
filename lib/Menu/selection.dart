@@ -146,13 +146,14 @@ class _SelectionState extends State<Selection> {
 
   @override
   Widget build(BuildContext context) {
-    // final appState = Provider.of<MapState>(context);
-    final appState = context.watch<MapState>();
+    final appState = Provider.of<MapState>(context);
+    // final appState = context.watch<MapState>();
     final userID = Provider.of<User>(context);
     print('Within selection: ' + userID.uid.toString());
-    print('Before selection:' +
-        appState.initialPosition
-            .toString()); // final userID = Provider.of<User>(context);
+    // print('Before selection:' +
+    //     appState.initialPosition
+    //         .toString());
+    // final userID = Provider.of<User>(context);
     // print("[Booking] User is: " + userID.uid.toString());
     return StreamBuilder<List<BusStatic>>(
         stream: MapDatabaseService().busStaticData,
@@ -291,8 +292,8 @@ class _SelectionState extends State<Selection> {
                                 selectedBookingTo = _controllerTo!.text;
                                 await travel(
                                     selectedBookingFrom, selectedBookingTo);
-                                appState.sendRequest(
-                                    selectedMapsFrom, selectedMapsTo, busData);
+                                await appState.sendRequest(selectedBookingFrom,
+                                    selectedBookingTo, busData);
                                 print('After selection:' +
                                     appState.initialPosition.toString());
 

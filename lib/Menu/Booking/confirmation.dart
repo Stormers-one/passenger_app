@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:passenger_app/Menu/Booking/Ticket.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
+import 'package:passenger_app/shared/Styling/homepageButtons/button.dart';
+import 'package:passenger_app/shared/Styling/homepageButtons/data.dart';
 import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/database.dart';
 import 'package:passenger_app/shared/constants.dart';
@@ -68,139 +70,158 @@ class _BookingConfirm extends State<BookingConfirm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    final buttonHome = Buttons.fetchAll();
+
     print(user.uid);
     print(user.uid!);
     return loading
         ? Loading()
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              StreamBuilder<UserData>(
-                stream: DatabaseService(uid: user.uid!).userData,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    UserData userData = snapshot.data!;
-                    return Form(
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            new TextField(
-                              enabled: false,
-                              decoration: new InputDecoration(
-                                labelText: userData.fname,
-                                labelStyle: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                ),
-                                icon: Icon(Icons.account_box),
-                                fillColor: Colors.grey[300],
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
+        : Container(
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                StreamBuilder<UserData>(
+                  stream: DatabaseService(uid: user.uid!).userData,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      UserData userData = snapshot.data!;
+                      return Form(
+                        child: Container(
+                          padding: EdgeInsets.all(20.0),
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                              ),
+                              new TextField(
+                                enabled: false,
+                                decoration: new InputDecoration(
+                                  labelText: userData.fname,
+                                  labelStyle: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
                                   ),
-                                  borderRadius: new BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            new Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            new TextField(
-                              enabled: false,
-                              decoration: new InputDecoration(
-                                labelText: selectedBookingFrom,
-                                labelStyle: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                ),
-                                icon: Icon(Icons.person_pin), //directions_bus
-                                fillColor: Colors.grey[300],
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                  borderRadius: new BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            new Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            new TextField(
-                              enabled: false,
-                              decoration: new InputDecoration(
-                                labelText: selectedBookingTo,
-                                labelStyle: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                ),
-                                icon: Icon(Icons.pin_drop),
-                                fillColor: Colors.grey[300],
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                  borderRadius: new BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            new Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            new TextField(
-                              enabled: false,
-                              decoration: new InputDecoration(
-                                labelText: fare.toString(),
-                                labelStyle: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                                icon: Icon(MdiIcons.currencyInr),
-                                fillColor: Colors.grey[300],
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                  borderRadius: new BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            new Padding(
-                              padding: const EdgeInsets.only(top: 30.0),
-                            ),
-                            SizedBox(
-                              height: 50,
-                              width: 200,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  loading = true;
-                                  openCheckout();
-                                },
-                                child: const Text(
-                                  'Proceed To Payment',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
+                                  icon: Icon(Icons.account_box),
+                                  fillColor: Colors.grey[300],
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    borderRadius: new BorderRadius.circular(10),
                                   ),
                                 ),
-                                style: raisedButtonStyle,
                               ),
-                            ),
-                          ],
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                              ),
+                              new TextField(
+                                enabled: false,
+                                decoration: new InputDecoration(
+                                  labelText: selectedBookingFrom,
+                                  labelStyle: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                  icon: Icon(Icons.person_pin), //directions_bus
+                                  fillColor: Colors.grey[300],
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                              ),
+                              new TextField(
+                                enabled: false,
+                                decoration: new InputDecoration(
+                                  labelText: selectedBookingTo,
+                                  labelStyle: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                  icon: Icon(Icons.pin_drop),
+                                  fillColor: Colors.grey[300],
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                              ),
+                              new TextField(
+                                enabled: false,
+                                decoration: new InputDecoration(
+                                  labelText: fare.toString(),
+                                  labelStyle: TextStyle(
+                                      fontSize: 15, color: Colors.black),
+                                  icon: Icon(MdiIcons.currencyInr),
+                                  fillColor: Colors.grey[300],
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              new Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
+                              ),
+                              SizedBox(
+                                height: 50,
+                                width: 200,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    loading = true;
+                                    openCheckout();
+                                  },
+                                  child: const Text(
+                                    'Proceed To Payment',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: raisedButtonStyle,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  } else {
-                    return Loading();
-                  }
-                },
-              ),
-            ],
+                      );
+                    } else {
+                      return Loading();
+                    }
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Button(
+                          image: buttonHome[1].image,
+                          route: buttonHome[1].route,
+                          text: buttonHome[1].text,
+                          context: context)
+                    ],
+                  ),
+                )
+              ],
+            ),
           );
   }
 }

@@ -7,12 +7,11 @@ import 'googlemapservice.dart';
 import 'package:geocoding/geocoding.dart';
 
 class MapState with ChangeNotifier {
-  static LatLng _initialPosition = LatLng(0.0, 0.0);
-  LatLng _lastPosition = _initialPosition;
+  static LatLng? _initialPosition;
   bool locationServiceActive = true;
   final Set<Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
-  GoogleMapController? _mapController;
+  // GoogleMapController? _mapController;
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
 
   // Map access Split START
@@ -32,16 +31,14 @@ class MapState with ChangeNotifier {
 
   TextEditingController locationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
-  LatLng get initialPosition => _initialPosition;
-  LatLng get lastPosition => _lastPosition;
+  LatLng? get initialPosition => _initialPosition!;
   GoogleMapsServices get googleMapsServices => _googleMapsServices;
-  GoogleMapController get mapController => _mapController!;
+  // GoogleMapController get mapController => _mapController!;
   Set<Marker> get markers => _markers;
   Set<Polyline> get polyLines => _polyLines;
 
   MapState() {
     // _getUserLocation();
-    _loadingInitialPosition();
     _setCustomMapPin();
   }
 
@@ -52,7 +49,7 @@ class MapState with ChangeNotifier {
   }
 
   // ! TO CREATE ROUTE
-  void sendRequest(
+  sendRequest(
       String fromLocation, String toLocation, List<BusStatic> busData) async {
     fromLocation = fromLocation + ', Kerala';
     toLocation = toLocation + ', Kerala';
@@ -174,23 +171,12 @@ class MapState with ChangeNotifier {
 
   // ! ON CAMERA MOVE
   void onCameraMove(CameraPosition position) {
-    _lastPosition = position.target;
     notifyListeners();
   }
 
   // ! ON CREATE
-  void onCreated(GoogleMapController controller) {
-    _mapController = controller;
-    notifyListeners();
-  }
-
-//  LOADING INITIAL POSITION
-  void _loadingInitialPosition() async {
-    await Future.delayed(Duration(seconds: 5)).then((v) {
-      if (_initialPosition == LatLng(0.0, 0.0)) {
-        locationServiceActive = false;
-        notifyListeners();
-      }
-    });
-  }
+  // void onCreated(GoogleMapController controller) {
+  //   _mapController = controller;
+  //   notifyListeners();
+  // }
 }

@@ -1,0 +1,9 @@
+const String HOMEPAGE = '/Homepage',
+    ADDRESS = '/Address',
+    ADDRESS_ADD = '/AddressAdd',
+    CONFIRMATION = '/Confirmation',
+    MY_ORDERS = '/Bookings',
+    PRODUCT = '/Dashboard',
+    PROFILE = '/Profile',
+    CREDITS = '/Credit',
+    WRAPPER = '/Wrapper';
