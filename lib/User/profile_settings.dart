@@ -32,8 +32,10 @@ class _SettingsFormState extends State<SettingsForm> {
     try {
       firebase_storage.UploadTask uploadTask =
           firebaseStorageref.putFile(File(_image!.path));
-      firebase_storage.TaskSnapshot taskSnapshot =
-          await uploadTask.whenComplete(() => null);
+      // firebase_storage.TaskSnapshot taskSnapshot =
+      await uploadTask.whenComplete(
+        () => print('Completed upload task'),
+      );
       Fluttertoast.showToast(msg: 'Profile Picture Uploaded');
     } catch (e) {
       Fluttertoast.showToast(msg: 'Cancelled');

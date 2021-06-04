@@ -39,6 +39,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<User>(context);
+    print('[Homepage] User: ' + userID.uid.toString());
     final List<Widget> _children = [Home(), Profile()];
     final List<List<Widget>> _appBarChildren = [
       [Logout(auth: auth)],
@@ -100,6 +101,8 @@ class Home extends StatelessWidget {
   Widget build(context) {
     final buttonHome = Buttons.fetchAll();
     final userID = context.watch<User>();
+    print('[Homepage]->[Home] User: ' + userID.uid.toString());
+
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.only(left: 9.0, right: 9.0),

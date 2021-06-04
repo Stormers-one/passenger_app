@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:passenger_app/shared/constants.dart';
 

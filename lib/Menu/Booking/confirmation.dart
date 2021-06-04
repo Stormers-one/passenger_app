@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -90,7 +88,7 @@ class _BookingConfirm extends State<BookingConfirm> {
                       UserData userData = snapshot.data!;
                       return Form(
                         child: Container(
-                          padding: EdgeInsets.all(20.0),
+                          padding: EdgeInsets.fromLTRB(20.0, 0, 20, 20),
                           child: new Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[

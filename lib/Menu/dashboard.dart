@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
   // final fare;
   // _DashboardState({this.fare});
   GoogleMapController? mapController;
-  LatLng? _center;
+  // LatLng? _center;
   Position? currentLocation;
   // CameraPosition _position;
 
@@ -55,190 +55,213 @@ class _DashboardState extends State<Dashboard> {
   //   });
   //   print('center $_center');
   // }
+  Future<bool> _onWillPop() async {
+    Navigator.popUntil(context, ModalRoute.withName('/'));
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<MapState>(context, listen: true);
     print('After selection, Dashboard :' + appState.initialPosition.toString());
-    return Scaffold(
-      backgroundColor: bgColor,
-      body: new GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.82,
-                child: (appState.initialPosition == null)
-                    ? Loading()
-                    : SafeArea(
-                        child: Stack(
-                          children: <Widget>[
-                            GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                  target: appState.initialPosition!,
-                                  zoom: 10.0),
-                              // onMapCreated: appState.onCreated,
-                              // myLocationEnabled: true,
-                              mapType: MapType.normal,
-                              // compassEnabled: true,
-                              markers: appState.markers,
-                              // onCameraMove: appState.onCameraMove,
-                              polylines: appState.polyLines,
-                            ),
-                          ],
-                        ),
-                      ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.8,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Material(
-                          borderRadius: BorderRadius.circular(100),
-                          child: InkWell(
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: red,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
+        backgroundColor: bgColor,
+        body: new GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.82,
+                  child: (appState.initialPosition == null)
+                      ? Container(
+                          color: Colors.white,
+                          child: Loading(),
+                        )
+                      : SafeArea(
+                          child: Stack(
+                            children: <Widget>[
+                              GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                    target: appState.initialPosition!,
+                                    zoom: 10.0),
+                                // onMapCreated: appState.onCreated,
+                                // myLocationEnabled: true,
+                                mapType: MapType.normal,
+                                // compassEnabled: true,
+                                markers: appState.markers,
+                                // onCameraMove: appState.onCameraMove,
+                                polylines: appState.polyLines,
                               ),
-                              child:
-                                  Icon(Icons.arrow_back, color: Colors.black),
-                            ),
-                            onTap: () => Navigator.popUntil(
-                                context, ModalRoute.withName('/')),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Container(),
-                            ),
-                            Expanded(
-                                flex: 2,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: raspberryColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        selectedBookingFrom,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Icon(MdiIcons.swapHorizontalBold,
-                                          color: Colors.white),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        selectedBookingTo,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            Expanded(
-                              flex: 1,
-                              child: Container(),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: InfoField(
-                                  fieldData: appState.distance,
-                                  fieldName: 'Distance: '),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: InfoField(
-                                  fieldData: appState.duration,
-                                  fieldName: 'Duration: '),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
-              ),
-              DraggableScrollableSheet(
-                  initialChildSize: 0.2,
-                  minChildSize: 0.2,
-                  maxChildSize: 0.7,
-                  builder: (BuildContext context,
-                      ScrollController scrollController) {
-                    return SingleChildScrollView(
-                      child: Container(
-                        // height: MediaQuery.of(context).size.height * 0.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25)),
-                          color: Colors.white,
-                        ),
-                        child: ListView(
-                            shrinkWrap: true,
-                            controller: scrollController,
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            borderRadius: BorderRadius.circular(100),
+                            child: InkWell(
+                              child: Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: red,
+                                ),
+                                child:
+                                    Icon(Icons.arrow_back, color: Colors.black),
+                              ),
+                              onTap: () => Navigator.popUntil(
+                                  context, ModalRoute.withName('/')),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
                             children: <Widget>[
-                              BookingConfirm(),
-                            ]),
+                              Expanded(
+                                flex: 1,
+                                child: Container(),
+                              ),
+                              Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: raspberryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          selectedBookingFrom,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Icon(MdiIcons.swapHorizontalBold,
+                                            color: Colors.white),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          selectedBookingTo,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              Expanded(
+                                flex: 1,
+                                child: Container(),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                    );
-                  })
-            ],
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: InfoField(
+                                    fieldData: appState.distance,
+                                    fieldName: 'Distance: '),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: InfoField(
+                                    fieldData: appState.duration,
+                                    fieldName: 'Duration: '),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                DraggableScrollableSheet(
+                    initialChildSize: 0.2,
+                    minChildSize: 0.2,
+                    maxChildSize: 0.65,
+                    builder: (BuildContext context,
+                        ScrollController scrollController) {
+                      return SingleChildScrollView(
+                        child: Container(
+                          // height: MediaQuery.of(context).size.height * 0.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25)),
+                            color: Colors.white,
+                          ),
+                          child: ListView(
+                              shrinkWrap: true,
+                              controller: scrollController,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5.0),
+                                      child: Icon(
+                                        Icons.horizontal_rule_rounded,
+                                        size: 30,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                BookingConfirm(),
+                              ]),
+                        ),
+                      );
+                    })
+              ],
+            ),
           ),
         ),
       ),

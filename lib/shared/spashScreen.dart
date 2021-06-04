@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:passenger_app/Wrapper.dart';
 import 'package:passenger_app/shared/routes.dart';
 
 class SplashScreen extends StatefulWidget {

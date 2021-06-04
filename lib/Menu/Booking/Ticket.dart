@@ -10,11 +10,15 @@ import 'package:qr_flutter/qr_flutter.dart';
 class TicketDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<bool> _onWillPop() async {
+      Navigator.popUntil(context, ModalRoute.withName('/'));
+      return false;
+    }
+
     final user = Provider.of<User>(context);
-    return MaterialApp(
-      title: 'Your Ticket',
-      theme: ThemeData(fontFamily: 'Quicksand-Medium'),
-      home: Scaffold(
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
         backgroundColor: Colors.orange[100],
         appBar: AppBar(
             elevation: 0,

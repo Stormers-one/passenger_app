@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/Menu/Booking/bookingList.dart';
-import 'package:passenger_app/Menu/Booking/confirmation.dart';
 import 'package:passenger_app/Menu/dashboard.dart';
 import 'package:passenger_app/Shared/services/mapServices/mapState.dart';
 import 'package:passenger_app/Wrapper.dart';
@@ -10,7 +9,6 @@ import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/routes.dart';
 import 'package:passenger_app/shared/services/firebaseServices/Signing_and_Auth/loginPage.dart';
-import 'package:passenger_app/shared/spashScreen.dart';
 import 'package:provider/provider.dart';
 import 'Shared/services/mapServices/mapState.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,10 +19,10 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<MapState>(
-          // value: MapState(),
-          create: (context) => MapState(),
-          child: Odukomban(),
+        ChangeNotifierProvider.value(
+          value: MapState(),
+          // create: (context) => MapState(),
+          // child: Odukomban(),
         ),
         StreamProvider<User>.value(
           initialData: User(),
