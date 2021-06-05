@@ -143,14 +143,11 @@ class Home extends StatelessWidget {
 
     return ListView(
       shrinkWrap: true,
-      padding: const EdgeInsets.only(left: 9.0, right: 9.0),
+      padding: const EdgeInsets.symmetric(horizontal: 9.0),
       children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // SizedBox(
-            //   height: 5,
-            // ),
             Hero(
               tag: 'imageHero',
               child: new Container(
@@ -162,33 +159,32 @@ class Home extends StatelessWidget {
               ),
             ),
             Container(
-              alignment: Alignment.bottomCenter,
               padding: EdgeInsets.only(left: 20.0, right: 20.0),
               width: MediaQuery.of(context).size.width,
               //height:
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      // color: Colors.amber,
-                      width: MediaQuery.of(context).size.width,
-                      child: SizedBox.expand(child: Landing()),
+                children: [
+                  Landing(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Button(
+                            image: buttonHome[2].image,
+                            route: buttonHome[2].route,
+                            text: buttonHome[2].text,
+                            context: context),
+                      ],
                     ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Button(
-                              image: buttonHome[2].image,
-                              route: buttonHome[2].route,
-                              text: buttonHome[2].text,
-                              context: context),
-                        ],
-                      ),
-                    ),
-                  ]),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -205,161 +201,175 @@ class Profile extends StatelessWidget {
     final userID = Provider.of<User>(context);
 
     final buttonHome = Buttons.fetchAll();
-    return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: userID.uid!).userData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            UserData userData = snapshot.data!;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          child: ProfileSettings(),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          child: Logout(auth: auth),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.center,
-                      child: CircleAvatar(
-                        radius: 90,
-                        backgroundColor: Colors.black,
-                        child: ClipOval(
-                          child: SizedBox(
-                            width: 170,
-                            height: 170,
-                            child: FadeInImage.assetNetwork(
-                              fadeInCurve: Curves.bounceIn,
-                              placeholder: 'assets/images/loading.gif',
-                              image: downURL,
-                              fit: BoxFit.cover,
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          StreamBuilder<UserData>(
+              stream: DatabaseService(uid: userID.uid!).userData,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  UserData userData = snapshot.data!;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      // SizedBox(
+                      //   height: 30,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(25),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: ProfileSettings(),
+                              ),
                             ),
-                          ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: Logout(auth: auth),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Form(
-                    child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                          ),
-                          new TextField(
-                            enabled: false,
-                            decoration: new InputDecoration(
-                              labelText: userData.fname,
-                              labelStyle:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                              icon: Icon(Icons.account_box),
-                              fillColor: Colors.grey.shade300,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                                borderRadius: new BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                          ),
-                          new TextField(
-                            enabled: false,
-                            decoration: new InputDecoration(
-                              labelText: userData.email,
-                              labelStyle:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                              icon: Icon(Icons.email),
-                              fillColor: Colors.grey[300],
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                                borderRadius: new BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                          ),
-                          new TextField(
-                            enabled: false,
-                            decoration: new InputDecoration(
-                              labelText: userData.phno,
-                              labelStyle:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                              icon: Icon(Icons.phone),
-                              fillColor: Colors.grey[300],
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                                borderRadius: new BorderRadius.circular(10),
+                          Align(
+                            alignment: Alignment.center,
+                            child: CircleAvatar(
+                              radius: 90,
+                              backgroundColor: Colors.black,
+                              child: ClipOval(
+                                child: SizedBox(
+                                  width: 170,
+                                  height: 170,
+                                  child: FadeInImage.assetNetwork(
+                                    fadeInCurve: Curves.bounceIn,
+                                    placeholder: 'assets/images/loading.gif',
+                                    image: downURL,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Button(
-                      image: buttonHome[4].image,
-                      text: buttonHome[4].text,
-                      route: buttonHome[4].route,
-                      context: context,
-                    ),
-                    Button(
-                      image: buttonHome[5].image,
-                      text: buttonHome[5].text,
-                      route: buttonHome[5].route,
-                      context: context,
-                    ),
-                  ],
-                )
-              ],
-            );
-          } else {
-            return Loading();
-          }
-        });
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Form(
+                          child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            child: new Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                new Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                ),
+                                new TextField(
+                                  enabled: false,
+                                  decoration: new InputDecoration(
+                                    labelText: userData.fname,
+                                    labelStyle: TextStyle(
+                                        fontSize: 15, color: Colors.black),
+                                    icon: Icon(Icons.account_box),
+                                    fillColor: Colors.grey.shade300,
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius:
+                                          new BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                new Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                ),
+                                new TextField(
+                                  enabled: false,
+                                  decoration: new InputDecoration(
+                                    labelText: userData.email,
+                                    labelStyle: TextStyle(
+                                        fontSize: 15, color: Colors.black),
+                                    icon: Icon(Icons.email),
+                                    fillColor: Colors.grey[300],
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius:
+                                          new BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                new Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                ),
+                                new TextField(
+                                  enabled: false,
+                                  decoration: new InputDecoration(
+                                    labelText: userData.phno,
+                                    labelStyle: TextStyle(
+                                        fontSize: 15, color: Colors.black),
+                                    icon: Icon(Icons.phone),
+                                    fillColor: Colors.grey[300],
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius:
+                                          new BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Button(
+                            image: buttonHome[4].image,
+                            text: buttonHome[4].text,
+                            route: buttonHome[4].route,
+                            context: context,
+                          ),
+                          Button(
+                            image: buttonHome[5].image,
+                            text: buttonHome[5].text,
+                            route: buttonHome[5].route,
+                            context: context,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                } else {
+                  return Loading();
+                }
+              }),
+        ],
+      ),
+    );
   }
 }
 
@@ -390,8 +400,9 @@ class ProfileSettings extends StatelessWidget {
           color: Colors.black,
         ),
         label: Text(
-          'Edit Profile',
+          'Edit',
           style: TextStyle(color: Colors.black),
+          overflow: TextOverflow.clip,
         ),
       ),
     );
