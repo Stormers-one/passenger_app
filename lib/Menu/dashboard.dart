@@ -157,9 +157,15 @@ class _DashboardState extends State<Dashboard> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          selectedBookingFrom,
-                                          style: TextStyle(color: Colors.white),
+                                        Expanded(
+                                          child: Container(
+                                            child: Text(
+                                              selectedBookingFrom,
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              overflow: TextOverflow.clip,
+                                            ),
+                                          ),
                                         ),
                                         SizedBox(
                                           width: 5,
@@ -169,9 +175,15 @@ class _DashboardState extends State<Dashboard> {
                                         SizedBox(
                                           width: 5,
                                         ),
-                                        Text(
-                                          selectedBookingTo,
-                                          style: TextStyle(color: Colors.white),
+                                        Expanded(
+                                          child: Container(
+                                            child: Text(
+                                              selectedBookingTo,
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              overflow: TextOverflow.clip,
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
