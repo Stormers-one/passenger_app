@@ -112,7 +112,11 @@ flutter:
     - assets/images/qr-code.png
     - assets/images/bluetooth.png
     - assets/images/loading.gif
-    - assets/images/bus_loc.png
+    - assets/images/bus_loc_yellow.png
+    - assets/images/bus_loc_red.png
+    - assets/images/bus_loc_green.png
+    - assets/images/bus_loc_orange.png
+
     - assets/images/calendar.png
 
   fonts:

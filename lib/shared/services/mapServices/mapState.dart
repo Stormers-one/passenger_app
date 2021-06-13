@@ -42,10 +42,21 @@ class MapState with ChangeNotifier {
     _setCustomMapPin();
   }
 
-  static BitmapDescriptor? _pinLocationIcon;
+  static List<BitmapDescriptor?> _pinList = [];
+
   void _setCustomMapPin() async {
-    _pinLocationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'assets/images/bus_loc.png');
+    _pinList.add(await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/bus_loc_red.png'));
+    _pinList.add(await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/bus_loc_orange.png'));
+    _pinList.add(await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/bus_loc_yellow.png'));
+    _pinList.add(await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/bus_loc_green.png'));
   }
 
   // ! TO CREATE ROUTE
@@ -84,23 +95,23 @@ class MapState with ChangeNotifier {
     notifyListeners();
   }
 
-  Color? color;
+  int opt = 3;
   void _addBusMarker(LatLng location, String address, int count) {
     if (count < 20) {
-      color = crowdLow;
+      opt = 3;
     } else if (count > 20 && count < 40) {
-      color = crowdMed;
+      opt = 2;
     } else if (count > 40 && count > 50) {
-      color = crowdHigh;
+      opt = 1;
     } else {
-      color = crowdFull;
+      opt = 0;
     }
 
     _markers.add(Marker(
         markerId: MarkerId(address.toString()),
         position: location,
         infoWindow: InfoWindow(title: address),
-        icon: _pinLocationIcon!));
+        icon: _pinList[opt]!));
     notifyListeners();
   }
 
