@@ -51,9 +51,11 @@ jobs:
     
     
       # Upload generated apk to the artifacts.
+      - run: flutter build apk
+      
+      
       - uses: actions/upload-artifact@v1
         with:
-          name: passenger-apk
-          path: build/app/outputs/apk/release/app-passenger.apk
+          name: passenger_app
+          path: build/app/outputs/apk/release/app-release.apk
       # Build apk.
-      - run: flutter build apk
