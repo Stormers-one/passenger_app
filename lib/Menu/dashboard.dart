@@ -259,7 +259,8 @@ class _DashboardState extends State<Dashboard> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 5.0, bottom: 5.0),
                                       child: Icon(
                                         Icons.horizontal_rule_rounded,
                                         size: 30,
@@ -267,7 +268,20 @@ class _DashboardState extends State<Dashboard> {
                                     )
                                   ],
                                 ),
-                                BookingConfirm(),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(25),
+                                  ),
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6,
+                                    child: ListView(
+                                      children: [
+                                        BookingConfirm(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ]),
                         ),
                       );
