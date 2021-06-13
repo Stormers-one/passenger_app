@@ -241,48 +241,55 @@ class _DashboardState extends State<Dashboard> {
                     maxChildSize: 0.65,
                     builder: (BuildContext context,
                         ScrollController scrollController) {
-                      return SingleChildScrollView(
+                      return ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
                         child: Container(
-                          // height: MediaQuery.of(context).size.height * 0.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25)),
-                            color: Colors.white,
-                          ),
-                          child: ListView(
-                              shrinkWrap: true,
-                              controller: scrollController,
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5.0, bottom: 5.0),
-                                      child: Icon(
-                                        Icons.horizontal_rule_rounded,
-                                        size: 30,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(25),
+                          color: Colors.white,
+                          child: SingleChildScrollView(
+                            controller: scrollController,
+                            child: Column(
+                                // shrinkWrap: true,
+                                // controller: scrollController,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5.0, bottom: 5.0),
+                                        child: Icon(
+                                          Icons.horizontal_rule_rounded,
+                                          size: 30,
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  child: SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.6,
-                                    child: ListView(
-                                      children: [
-                                        BookingConfirm(),
-                                      ],
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(25),
+                                      ),
+                                      child: Container(
+                                        color: Colors.grey.shade200,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.55,
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          children: [
+                                            BookingConfirm(),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ]),
+                                ]),
+                          ),
                         ),
                       );
                     })

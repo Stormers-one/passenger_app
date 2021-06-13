@@ -76,11 +76,12 @@ class _BookingConfirm extends State<BookingConfirm> {
     return loading
         ? Loading()
         : Container(
-            height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            // height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                // SizedBox(height: 5),
                 StreamBuilder<UserData>(
                   stream: DatabaseService(uid: user.uid!).userData,
                   builder: (context, snapshot) {
@@ -218,7 +219,8 @@ class _BookingConfirm extends State<BookingConfirm> {
                           context: context)
                     ],
                   ),
-                )
+                ),
+                SizedBox(height: 20),
               ],
             ),
           );
