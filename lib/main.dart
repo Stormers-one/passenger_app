@@ -9,6 +9,7 @@ import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/Shared/services/firebaseServices/auth.dart';
 import 'package:passenger_app/shared/routes.dart';
 import 'package:passenger_app/shared/services/firebaseServices/Signing_and_Auth/loginPage.dart';
+import 'package:passenger_app/shared/spashScreen.dart';
 import 'package:provider/provider.dart';
 import 'Shared/services/mapServices/mapState.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,7 +50,7 @@ class Odukomban extends StatelessWidget {
         } else {
           userID = user.uid;
           print("[Wrapper] User is :" + userID.toString());
-          return Homepage();
+          return SplashScreen();
         }
       }),
       routes: <String, WidgetBuilder>{

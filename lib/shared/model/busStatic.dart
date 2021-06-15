@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BusStatic {
-  final String? busId;
+  final String? busID;
   final String? direction;
   final String? latitude;
   final GeoPoint? location;
@@ -9,7 +9,7 @@ class BusStatic {
   final String? routeId;
   final int? count;
   BusStatic(
-      {this.busId,
+      {this.busID,
       this.direction,
       this.latitude,
       this.location,

@@ -16,7 +16,6 @@ class GoogleMapsServices {
     });
     http.Response response = await http.get(url);
     Map values = jsonDecode(response.body);
-    print("Values Variable : $values");
     return values["routes"][0]["overview_polyline"]["points"] ?? '';
   }
 

@@ -37,9 +37,39 @@ class MapState with ChangeNotifier {
   Set<Marker> get markers => _markers;
   Set<Polyline> get polyLines => _polyLines;
 
+  String? _from, _to, _routeName;
+  String get routeName => _routeName!;
+
+  List<BusStatic>? _busData;
+  set setBusData(List<BusStatic> busData) {
+    this._busData = busData;
+  }
+
   MapState() {
     // _getUserLocation();
     _setCustomMapPin();
+  }
+
+  String extractRouteName(String s) {
+    s = s.split(' ')[0].toLowerCase();
+    s = s[0].toUpperCase() + s.substring(1);
+    return s;
+  }
+
+  RegExp expRouteExtract = new RegExp(r'([\w ]+)[^(\w+)]?');
+
+  String extractRoute(String route) {
+    var _from =
+        expRouteExtract.stringMatch(route).toString().trim().toLowerCase();
+    var _fromList = _from.split(' ');
+    List<String> newList = [];
+    _fromList.forEach((element) {
+      if (element != 'bs') {
+        newList.add(element);
+      }
+    });
+    var _res = newList.join(' ');
+    return _res;
   }
 
   static List<BitmapDescriptor?> _pinList = [];
@@ -60,10 +90,9 @@ class MapState with ChangeNotifier {
   }
 
   // ! TO CREATE ROUTE
-  sendRequest(
-      String fromLocation, String toLocation, List<BusStatic> busData) async {
-    fromLocation = fromLocation + ', Kerala';
-    toLocation = toLocation + ', Kerala';
+  sendRequest(String _fromLocation, String _toLocation) async {
+    String fromLocation = _fromLocation + ', Kerala';
+    String toLocation = _toLocation + ', Kerala';
     List<Location> placemark1 = await locationFromAddress(fromLocation);
     print(placemark1);
     List<Location> placemark2 = await locationFromAddress(toLocation);
@@ -77,6 +106,16 @@ class MapState with ChangeNotifier {
     _markers.clear();
     _addMarker(start, fromLocation);
     _addMarker(destination, toLocation);
+    // _from = extractRouteName(fromLocation);
+    // _to = extractRouteName(toLocation);
+    _from = extractRoute(_fromLocation);
+    _to = extractRoute(_toLocation);
+    _from = _from![0].toUpperCase() + _from!.substring(1);
+    _to = _to![0].toUpperCase() + _to!.substring(1);
+    _routeName = _from! + ' - ' + _to!;
+    print(_fromLocation);
+    print(_from);
+    print(_routeName);
     String route =
         await _googleMapsServices.getRouteCoordinates(start, destination);
     createRoute(route);
@@ -84,33 +123,42 @@ class MapState with ChangeNotifier {
     _distance = _gmapData[0];
     _duration = _gmapData[1];
     _initialPosition = start;
+
+    notifyListeners();
+  }
+
+  setBusMarkers() {
+    print('set bus markers');
     int i;
-    for (i = 0; i < busData.length; i++) {
+    for (i = 0; i < _busData!.length; i++) {
+      print(_busData![i]);
       _addBusMarker(
-          LatLng(double.parse(busData[i].latitude!),
-              double.parse(busData[i].longitude!)),
-          busData[i].busId!,
-          busData[i].count!);
+        LatLng(double.parse(_busData![i].latitude!),
+            double.parse(_busData![i].longitude!)),
+        _busData![i],
+      );
     }
     notifyListeners();
   }
 
   int opt = 3;
-  void _addBusMarker(LatLng location, String address, int count) {
-    if (count < 20) {
+  void _addBusMarker(LatLng location, BusStatic data) {
+    if (data.count! < 20) {
       opt = 3;
-    } else if (count > 20 && count < 40) {
+    } else if (data.count! > 20 && data.count! < 40) {
       opt = 2;
-    } else if (count > 40 && count > 50) {
+    } else if (data.count! > 40 && data.count! > 50) {
       opt = 1;
     } else {
       opt = 0;
     }
 
     _markers.add(Marker(
-        markerId: MarkerId(address.toString()),
+        markerId: MarkerId(data.busID.toString()),
         position: location,
-        infoWindow: InfoWindow(title: address),
+        infoWindow: InfoWindow(
+            title: data.busID,
+            snippet: 'Direction: ' + data.direction.toString()),
         icon: _pinList[opt]!));
     notifyListeners();
   }
@@ -186,8 +234,8 @@ class MapState with ChangeNotifier {
   }
 
   // ! ON CREATE
-  // void onCreated(GoogleMapController controller) {
-  //   _mapController = controller;
-  //   notifyListeners();
-  // }
+  void onCreated(GoogleMapController controller) {
+    setBusMarkers();
+    notifyListeners();
+  }
 }

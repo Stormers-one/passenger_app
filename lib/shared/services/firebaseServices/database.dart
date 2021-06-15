@@ -135,29 +135,34 @@ class DatabaseService {
 }
 
 class MapDatabaseService {
+  final String routeName;
+  MapDatabaseService({required this.routeName});
   //////////////////////////////////////////////////////////////////////////////
   /////////////          Bus Static Location Collection          ///////////////
   //////////////////////////////////////////////////////////////////////////////
 
-  final CollectionReference busStaticCollecation =
+  final CollectionReference busStaticCollection =
       FirebaseFirestore.instance.collection('Bus Static Locations');
 
   List<BusStatic> _busStaticDataFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return BusStatic(
-          busId: doc['Bus_id'] ?? "",
+          busID: doc['Bus_ID'] ?? "",
           direction: doc['Direction'] ?? "",
           latitude: doc['Latitude'] ?? "",
           location: doc['Location'] ?? "",
           longitude: doc['Longitude'] ?? "",
-          routeId: doc['Route_id'] ?? "",
+          routeId: doc['Route_ID'] ?? "",
           count: doc['count'] ?? "");
     }).toList();
   }
 
   //get user stream
   Stream<List<BusStatic>> get busStaticData {
-    return busStaticCollecation.snapshots().map(_busStaticDataFromSnapshot);
+    return busStaticCollection
+        .where('Route_Name', isEqualTo: routeName)
+        .snapshots()
+        .map(_busStaticDataFromSnapshot);
   }
 }
 
