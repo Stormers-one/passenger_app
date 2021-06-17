@@ -4,7 +4,6 @@ import 'package:passenger_app/Menu/dashboard.dart';
 import 'package:passenger_app/shared/Styling/buttonStyles.dart';
 import 'package:passenger_app/shared/busSearch.dart';
 import 'package:passenger_app/shared/loading.dart';
-import 'package:passenger_app/shared/model/busStatic.dart';
 import 'package:passenger_app/shared/services/mapServices/mapState.dart';
 import 'package:passenger_app/shared/constants.dart';
 import '../Shared/services/mapServices/googlemapservice.dart';
