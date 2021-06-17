@@ -4,13 +4,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:passenger_app/Menu/Booking/confirmation.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
+import 'package:passenger_app/shared/constants.dart';
+import 'package:passenger_app/shared/loading.dart';
 import 'package:passenger_app/shared/model/busStatic.dart';
 import 'package:passenger_app/shared/services/firebaseServices/database.dart';
 import 'package:passenger_app/shared/services/mapServices/mapState.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../shared/constants.dart';
-import '../../shared/loading.dart';
 
 class Dashboard extends StatefulWidget {
   // final fare;
