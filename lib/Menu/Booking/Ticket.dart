@@ -181,7 +181,7 @@ class TicketDisplay extends StatelessWidget {
     name = qrdata['Name'];
     fare = qrdata['Fare'].toString();
     String data =
-        "{ \"from\" : \"$from\" , \"to\" : \"$to\" , \"bookID\" : \"$bid\" , \"name\" : \"$name\" , \"email\" : \"$email\" , \"phno\" : \"$phone\" , \"fare\" : \"$fare\" , \"uid\" : \"$uid\" ,}";
+        "{ \"from\" : \"$from\" , \"to\" : \"$to\" , \"bookID\" : \"$bid\" , \"name\" : \"$name\" , \"email\" : \"$email\" , \"phno\" : \"$phone\" , \"fare\" : \"$fare\" , \"uid\" : \"$uid\"}";
     print(data);
     return data;
   }
