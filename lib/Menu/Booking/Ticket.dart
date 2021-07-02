@@ -144,7 +144,14 @@ class TicketDisplay extends StatelessWidget {
                                     ),
                                     SizedBox(height: 30),
                                     QrImage(
-                                      data: qrdata.toString(),
+                                      data: qrDataProvider(
+                                          qrdata,
+                                          qrdata['BookingID'].toString(),
+                                          qrdata['Name'],
+                                          qrdata['Email'],
+                                          qrdata['PhoneNumber'],
+                                          userData.uid ?? ""),
+                                      // data: qrdata.toString(),
                                       version: QrVersions.auto,
                                       size: 200.0,
                                     ),
@@ -164,5 +171,18 @@ class TicketDisplay extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String qrDataProvider(Map<String, dynamic> qrdata, String bid, String name,
+      String email, String phone, String uid) {
+    String from, to, fare;
+    from = qrdata['From'];
+    to = qrdata['To'];
+    name = qrdata['Name'];
+    fare = qrdata['Fare'].toString();
+    String data =
+        "{ \"from\" : \"$from\" , \"to\" : \"$to\" , \"bookID\" : \"$bid\" , \"name\" : \"$name\" , \"email\" : \"$email\" , \"phno\" : \"$phone\" , \"fare\" : \"$fare\" , \"uid\" : \"$uid\" ,}";
+    print(data);
+    return data;
   }
 }
