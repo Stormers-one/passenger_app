@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:passenger_app/Menu/Timing/schedule.dart';
 import 'package:passenger_app/shared/model/busStatic.dart';
 import 'package:passenger_app/shared/model/busStop.dart';
+import 'package:passenger_app/shared/model/stopSchedule.dart';
 import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/User/users_fetch.dart';
@@ -163,6 +165,61 @@ class MapDatabaseService {
         .where('Route_Name', isEqualTo: routeName)
         .snapshots()
         .map(_busStaticDataFromSnapshot);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  ///////////////////          Schedule Collection          ////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+
+  final CollectionReference scheduleCollection =
+      FirebaseFirestore.instance.collection('Routes');
+
+  Future<List<StopSchduleDataList>> get scheduleData async {
+    List<String> schdDataIDs = [];
+    List<StopSchduleDataList> schdData = [];
+    await scheduleCollection
+        .where('route_name', isEqualTo: routeName)
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        schdDataIDs.add(element.id);
+      }
+    });
+    for (var docID in schdDataIDs) {
+      StopSchduleDataList tmp = new StopSchduleDataList();
+      await scheduleCollection
+          .doc(docID)
+          .collection('stops')
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          var tmpData = StopSchduleData(
+              name: element.data()['name'] ?? "",
+              stopNo: element.data()['stopNo'] ?? "",
+              time: element.data()['time'] ?? "");
+          tmp.addSchedule(tmpData);
+        }
+      });
+      schdData.add(tmp);
+    }
+    // busStaticCollection.where('route_name', isEqualTo: routeName).get().then(
+    //       (value) => value.docs.forEach(
+    //         (element) {
+    //           busStaticCollection
+    //               .doc(element.id)
+    //               .collection('Routes')
+    //               .snapshots()
+    //               .map(_scheduleDataFromSnapshot);
+    //         },
+    //       ),
+    //     );
+    // return busStaticCollection
+    //     .where('route_name', isEqualTo: routeName)
+    //     .snapshots()
+    //     .map(_scheduleDataFromSnapshot);
+    print(schdData.length);
+    print(schdData[14]);
+    return schdData;
   }
 }
 

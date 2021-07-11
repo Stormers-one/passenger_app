@@ -47,16 +47,6 @@ class _DashboardState extends State<Dashboard> {
     super.dispose();
   }
 
-  // getUserLocation() async {
-  //   currentLocation = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high);
-  //   setState(() {
-  //     _center = LatLng(currentLocation!.latitude, currentLocation!.longitude);
-
-  //     loading = false;
-  //   });
-  //   print('center $_center');
-  // }
   Future<bool> _onWillPop() async {
     Navigator.popUntil(context, ModalRoute.withName('/'));
     return false;
@@ -65,7 +55,6 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<MapState>(context, listen: true);
-    print('After selection, Dashboard :' + appState.initialPosition.toString());
     return WillPopScope(
         onWillPop: () => _onWillPop(),
         child: Scaffold(
@@ -78,13 +67,11 @@ class _DashboardState extends State<Dashboard> {
                 stream: MapDatabaseService(routeName: appState.routeName)
                     .busStaticData,
                 builder: (BuildContext context, snapshot) {
-                  // print(snapshot);
                   if (!snapshot.hasData) {
                     print(snapshot.hasData);
                     return Loading();
                   } else {
                     appState.setBusData = snapshot.data!;
-                    print(snapshot.data);
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
