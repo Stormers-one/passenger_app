@@ -142,6 +142,46 @@ class TicketDisplay extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    new Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                    ),
+                                    new TextField(
+                                      enabled: false,
+                                      decoration: new InputDecoration(
+                                        labelText: fare,
+                                        labelStyle: TextStyle(
+                                            fontSize: 15, color: Colors.black),
+                                        icon: Icon(Icons.stop),
+                                        fillColor: Colors.grey[300],
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    new Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                    ),
+                                    new TextField(
+                                      enabled: false,
+                                      decoration: new InputDecoration(
+                                        labelText: selectedBookingBusType,
+                                        labelStyle: TextStyle(
+                                            fontSize: 15, color: Colors.black),
+                                        icon: Icon(Icons.stop),
+                                        fillColor: Colors.grey[300],
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
                                     SizedBox(height: 30),
                                     QrImage(
                                       data: qrDataProvider(
