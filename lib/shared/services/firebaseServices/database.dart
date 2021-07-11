@@ -174,9 +174,11 @@ class MapDatabaseService {
   final CollectionReference scheduleCollection =
       FirebaseFirestore.instance.collection('Routes');
 
-  Future<List<StopSchduleDataList>> get scheduleData async {
+  Future<StopSchduleDataList> get scheduleData async {
     List<String> schdDataIDs = [];
-    List<StopSchduleDataList> schdData = [];
+    List<StopSchduleDataUnit> schdData = [];
+    StopSchduleDataList tmpList = new StopSchduleDataList();
+
     await scheduleCollection
         .where('route_name', isEqualTo: routeName)
         .get()
@@ -186,7 +188,7 @@ class MapDatabaseService {
       }
     });
     for (var docID in schdDataIDs) {
-      StopSchduleDataList tmp = new StopSchduleDataList();
+      StopSchduleDataUnit tmp = new StopSchduleDataUnit();
       await scheduleCollection
           .doc(docID)
           .collection('stops')
@@ -200,9 +202,9 @@ class MapDatabaseService {
           tmp.addSchedule(tmpData);
         }
       });
-      schdData.add(tmp);
+      tmpList.addSchedule(tmp);
     }
-    return schdData;
+    return tmpList;
   }
 }
 
