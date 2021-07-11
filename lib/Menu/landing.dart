@@ -62,10 +62,7 @@ class _LandingState extends State<Landing> {
         }
       });
     });
-    print(busStopName);
-    print("\n\n\n ");
     count++;
-    print(count);
   }
 
   final List<String> bustype = <String>[
@@ -113,9 +110,7 @@ class _LandingState extends State<Landing> {
     fromLocation = fromLocation + ', Kerala';
     toLocation = toLocation + ', Kerala';
     List<Location> placemark1 = await locationFromAddress(fromLocation);
-    print(placemark1);
     List<Location> placemark2 = await locationFromAddress(toLocation);
-    print(placemark2);
     double latitude1 = placemark1[0].latitude;
     double longitude1 = placemark1[0].longitude;
     double latitude2 = placemark2[0].latitude;
@@ -126,8 +121,6 @@ class _LandingState extends State<Landing> {
     _distance = mapData![0];
     String dist = _distance!;
     dist = dist.substring(0, dist.length - 3);
-    print(_distance);
-    print(dist);
     this.distDouble = double.parse(dist);
     distancing(distDouble!);
   }
@@ -280,8 +273,6 @@ class _LandingState extends State<Landing> {
                                     selectedBookingFrom, selectedBookingTo);
                                 await appState.sendRequest(
                                     selectedBookingFrom, selectedBookingTo);
-                                print('After selection:' +
-                                    appState.initialPosition.toString());
                                 loading = false;
                                 fare = getFare(_currentBusType, distDouble!);
                                 clickStatus = true;

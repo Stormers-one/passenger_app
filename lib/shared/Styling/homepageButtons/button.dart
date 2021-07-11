@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:passenger_app/Menu/Booking/bookingList.dart';
 import 'package:passenger_app/Menu/Timing/avtimes.dart';
+import 'package:passenger_app/Menu/Timing/schedule.dart';
 import 'package:passenger_app/Menu/Tracking/tracking.dart';
 import 'package:passenger_app/Menu/help.dart';
 // import '../homepageButtons/buttonClass.dart';
@@ -74,7 +75,7 @@ class Button extends StatelessWidget {
     } else if (route == 'Timing') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Aanavandi()),
+        MaterialPageRoute(builder: (context) => Schedule()),
       );
     } else if (route == 'Help') {
       Navigator.push(

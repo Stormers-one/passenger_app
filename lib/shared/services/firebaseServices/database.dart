@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:passenger_app/Menu/Timing/schedule.dart';
 import 'package:passenger_app/shared/model/busStatic.dart';
 import 'package:passenger_app/shared/model/busStop.dart';
+import 'package:passenger_app/shared/model/stopSchedule.dart';
 import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/shared/model/user.dart';
 import 'package:passenger_app/User/users_fetch.dart';
@@ -163,6 +165,44 @@ class MapDatabaseService {
         .where('Route_Name', isEqualTo: routeName)
         .snapshots()
         .map(_busStaticDataFromSnapshot);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  ///////////////////          Schedule Collection          ////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+
+  final CollectionReference scheduleCollection =
+      FirebaseFirestore.instance.collection('Routes');
+
+  Future<List<StopSchduleDataList>> get scheduleData async {
+    List<String> schdDataIDs = [];
+    List<StopSchduleDataList> schdData = [];
+    await scheduleCollection
+        .where('route_name', isEqualTo: routeName)
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        schdDataIDs.add(element.id);
+      }
+    });
+    for (var docID in schdDataIDs) {
+      StopSchduleDataList tmp = new StopSchduleDataList();
+      await scheduleCollection
+          .doc(docID)
+          .collection('stops')
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          var tmpData = StopSchduleData(
+              name: element.data()['name'] ?? "",
+              stopNo: element.data()['stop_No'] ?? "",
+              time: element.data()['time'] ?? "");
+          tmp.addSchedule(tmpData);
+        }
+      });
+      schdData.add(tmp);
+    }
+    return schdData;
   }
 }
 

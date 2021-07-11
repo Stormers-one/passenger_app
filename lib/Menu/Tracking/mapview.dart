@@ -60,7 +60,6 @@ class _MapView extends State<MapView> {
           icon: pinLocationIcon!));
       loading = false;
     });
-    print('center $_center');
   }
 
   void _onMapCreated(GoogleMapController mapController) {
@@ -68,7 +67,6 @@ class _MapView extends State<MapView> {
   }
 
   void _updateCameraPosition(CameraPosition position) {
-    print(_position);
     setState(() {
       this._position = position;
     });
