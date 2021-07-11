@@ -25,8 +25,7 @@ class _ScheduleState extends State<Schedule> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           color: Colors.white,
-          child: FutureBuilder<List<StopSchduleDataList>>(
-            initialData: [],
+          child: FutureBuilder<StopSchduleDataList>(
             future:
                 MapDatabaseService(routeName: appState.routeName).scheduleData,
             builder: (context, snapshot) {
@@ -39,7 +38,7 @@ class _ScheduleState extends State<Schedule> {
                   child: Loading(),
                 );
               }
-              List<StopSchduleDataList> data = snapshot.data!;
+              StopSchduleDataList data = snapshot.data!;
               return ListView(
                 physics: ScrollPhysics(),
                 children: [
@@ -96,7 +95,7 @@ class _ScheduleState extends State<Schedule> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: data.length,
+                      itemCount: data.count,
                       itemBuilder: (context, int index_1) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +111,7 @@ class _ScheduleState extends State<Schedule> {
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: data[index_1].count,
+                                itemCount: data.scheduleUnits![index_1].count,
                                 itemBuilder: (context, int index_2) {
                                   return Container(
                                     child: Row(
@@ -120,9 +119,8 @@ class _ScheduleState extends State<Schedule> {
                                         Expanded(
                                           flex: 1,
                                           child: Text(
-                                            data[index_1]
-                                                .schedules![index_2]
-                                                .stopNo
+                                            data.scheduleUnits![index_1]
+                                                .schedules![index_2].stopNo
                                                 .toString(),
                                             style: TextStyle(
                                                 fontSize: 15,
@@ -133,9 +131,8 @@ class _ScheduleState extends State<Schedule> {
                                         Expanded(
                                           flex: 5,
                                           child: Text(
-                                            data[index_1]
-                                                .schedules![index_2]
-                                                .name
+                                            data.scheduleUnits![index_1]
+                                                .schedules![index_2].name
                                                 .toString(),
                                             style: TextStyle(
                                                 fontSize: 15,
@@ -146,9 +143,8 @@ class _ScheduleState extends State<Schedule> {
                                         Expanded(
                                           flex: 3,
                                           child: Text(
-                                            data[index_1]
-                                                .schedules![index_2]
-                                                .time
+                                            data.scheduleUnits![index_1]
+                                                .schedules![index_2].time
                                                 .toString(),
                                             style: TextStyle(
                                                 fontSize: 15,
