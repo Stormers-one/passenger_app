@@ -1,6 +1,6 @@
 class StopSchduleData {
   final String? name;
-  final String? stopNo;
+  final int? stopNo;
   final String? time;
   StopSchduleData({this.name, this.stopNo, this.time});
 }

@@ -195,30 +195,13 @@ class MapDatabaseService {
         for (var element in value.docs) {
           var tmpData = StopSchduleData(
               name: element.data()['name'] ?? "",
-              stopNo: element.data()['stopNo'] ?? "",
+              stopNo: element.data()['stop_No'] ?? "",
               time: element.data()['time'] ?? "");
           tmp.addSchedule(tmpData);
         }
       });
       schdData.add(tmp);
     }
-    // busStaticCollection.where('route_name', isEqualTo: routeName).get().then(
-    //       (value) => value.docs.forEach(
-    //         (element) {
-    //           busStaticCollection
-    //               .doc(element.id)
-    //               .collection('Routes')
-    //               .snapshots()
-    //               .map(_scheduleDataFromSnapshot);
-    //         },
-    //       ),
-    //     );
-    // return busStaticCollection
-    //     .where('route_name', isEqualTo: routeName)
-    //     .snapshots()
-    //     .map(_scheduleDataFromSnapshot);
-    print(schdData.length);
-    print(schdData[14]);
     return schdData;
   }
 }
