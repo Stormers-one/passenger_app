@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:passenger_app/Menu/Booking/bookedTicket.dart';
 import 'package:passenger_app/shared/Styling/colors.dart';
 import 'package:passenger_app/shared/model/ticketmodel.dart';
 import 'package:passenger_app/shared/model/user.dart';
@@ -65,6 +66,12 @@ class BookingTile extends StatelessWidget {
           ),
           margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookedTicket(book: book)));
+            },
             //  CircleAvatar(
             //    radius: 50.0,
             //    backgroundColor: red,
