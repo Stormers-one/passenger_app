@@ -148,7 +148,7 @@ class TicketDisplay extends StatelessWidget {
                                     new TextField(
                                       enabled: false,
                                       decoration: new InputDecoration(
-                                        labelText: fare,
+                                        labelText: fare.toString(),
                                         labelStyle: TextStyle(
                                             fontSize: 15, color: Colors.black),
                                         icon: Icon(Icons.stop),
